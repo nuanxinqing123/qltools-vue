@@ -15,6 +15,11 @@
                 <p class="text">欢迎回来, <st>{{AdminInfo}}</st></p>
                 <p class="text_s">Tip: 遇到问题可以前往<a href="https://github.com/nuanxinqing123/QLTools">Github</a>反馈问题哦</p>
             </div>
+            <div class="mdui-float-right" style="margin-right: 15px; margin-top: 15px; margin-bottom: 15px">
+                <button @click="GetUpdate" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
+                    <i class="mdui-icon mdui-icon-left material-icons">update</i>检查版本
+                </button>
+            </div>
         </div>
 <!--        修改密码-->
         <div id="pwd" class="mdui-dialog" style="top: 210px; display: none;">
@@ -75,7 +80,7 @@
             <div class="mdui-dialog-content mdui-typo" style="height: 407px;">
                 <div id="Notice"></div>
                 <div class="mdui-dialog-actions">
-                    <a href="https://github.com/nuanxinqing123/QLTools/releases">
+                    <a id="github" href="https://github.com/nuanxinqing123/QLTools/releases">
                         <button class="mdui-btn mdui-color-green-700 mdui-text-color-white btn">
                             更新版本
                         </button>
@@ -223,6 +228,14 @@ export default {
                             // 打开对话框
                             let inst = new mdui.Dialog('#version');
                             inst.toggle()
+                        } else {
+                            // 修改通知
+                            document.getElementById("Notice").innerHTML = '<ul><li>暂无更新</li></ul>'
+                            document.getElementById("github").style.display = "none"
+
+                            // 打开对话框
+                            let inst = new mdui.Dialog('#version');
+                            inst.toggle()
                         }
                         break
                 }
@@ -238,7 +251,6 @@ export default {
     mounted() {
         this.GetIPData()
         this.GetAdminInfo()
-        this.GetUpdate()
     }
 }
 </script>
