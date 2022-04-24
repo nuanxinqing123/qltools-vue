@@ -1,0 +1,82 @@
+<template>
+    <!--    外型框架-->
+    <div class="mdui-toolbar">
+        <a href="/#/" class="mdui-btn mdui-btn-icon">
+            <i class="mdui-icon material-icons">account_balance_wallet</i>
+        </a>
+        <span class="mdui-typo-title">青龙Tools</span>
+        <div class="mdui-toolbar-spacer"></div>
+        <a mdui-tooltip="{content: '刷新页面'}" href="javascript:location.reload();" class="mdui-btn mdui-btn-icon">
+            <i class="mdui-icon material-icons">refresh</i>
+        </a>
+        <a mdui-tooltip="{content: '登录'}" @click="this.Login()" id="Login" class="mdui-btn mdui-btn-icon" >
+            <i class="mdui-icon material-icons">center_focus_strong</i>
+        </a>
+        <a mdui-tooltip="{content: '注册'}" @click="this.Register()" id="Register" class="mdui-btn mdui-btn-icon">
+            <i class="mdui-icon material-icons">center_focus_weak</i>
+        </a>
+        <a mdui-tooltip="{content: '管理面板'}" @click="this.GoAdmin()" id="Admin" class="mdui-btn mdui-btn-icon" style="display: none">
+            <i class="mdui-icon material-icons">account_circle</i>
+        </a>
+        <a mdui-tooltip="{content: '退出登录'}" @click="this.LogOut()" id="LogOut" class="mdui-btn mdui-btn-icon" style="display: none">
+            <i class="mdui-icon material-icons">exit_to_app</i>
+        </a>
+    </div>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+    name: "HeaderCom",
+    methods: {
+        CheckLogin(){
+            // 检查是否已登录,从本地存储里获取token
+            let token = localStorage.getItem('Bearer');
+            // 判断token是否为空如果为空则不跳转, 如果有则跳转到首页
+            if (!(token === null || token === "")) {
+                // 校验Token有效性
+                let TokenData = {"token": token};
+                axios.post("/v1/api/check/token", TokenData).then((res) => {
+                    if (res.data.data === true) {
+                        document.getElementById("Admin").style.display = "inline"
+                        document.getElementById("Login").style.display = "none"
+                        document.getElementById("Register").style.display = "none"
+                        document.getElementById("LogOut").style.display = "inline"
+                    } else {
+                        // Token失效
+                        localStorage.clear()
+                    }
+                })
+            }
+        },
+        LogOut(){
+            // 退出登录
+            console.log("退出登录")
+            localStorage.clear()
+            window.open("/#/", "_self")
+            location.reload()
+        },
+        GoAdmin(){
+            window.open("/#/admin", "_self")
+            location.reload()
+        },
+        Register(){
+            window.open("/#/register", "_self")
+            location.reload()
+        },
+        Login(){
+            window.open("/#/login", "_self")
+            location.reload()
+        }
+    },
+    mounted() {
+        // 判断登录状态
+        this.CheckLogin()
+    }
+}
+</script>
+
+<style scoped>
+
+</style>
