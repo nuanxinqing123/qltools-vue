@@ -20,14 +20,14 @@
                     <div style="width: 100%">
                         <div style="margin-top: 8px">
                             服务器：
-                            <select class="mdui-select" mdui-select="{position: 'bottom'}" @change="changeEnvData($event)" id="server">
+                            <select class="mdui-select" @change="changeEnvData($event)" id="server">
                                 <option v-for="d in InitIndexData['serverData']" :key="d" :value="d['PanelName']">{{d['PanelName']}}</option>
                             </select>
                         </div>
                         <div style="margin-top: 8px">
                             变量组：
-                            <select class="mdui-select" mdui-select="{position: 'bottom'}" @change="changeNum($event)" id="env">
-                                <option id="envOption" v-for="d in this.EnvData" :key="d" :value="d['name']">{{d['name']}}</option>
+                            <select class="mdui-select" @change="changeNum($event)" id="env">
+                                <option v-for="d in this.EnvData" :key="d" :value="d['name']">{{d['name']}}</option>
                             </select>
                         </div>
                         <div style="margin-top: 8px; font-size: 16px">
