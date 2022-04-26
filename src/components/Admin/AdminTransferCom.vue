@@ -17,7 +17,7 @@
             </div>
             <div class="mdui-card-content mdui-typo">
                 <p class="text_s">Tip: 迁移/复制功能需要至少添加两个面板地址才能正常使用</p>
-                <p class="text_s">迁移: 将A面板的所有变量迁移到B面板, 迁移完成后会清空A面板变量</p>
+                <p class="text_s">迁移: 将A面板的所有变量迁移到B面板, 迁移完成后会清空A面板变量 <span style="color: red">【迁移功能可能受到青龙的限流限制,强烈推荐使用备份功能先备份数据。然后在使用迁移功能（避免数据丢失）】</span></p>
                 <p class="text_s">复制: 将A面板的所有变量复制到B面板, 复制完成后A面板变量不会变化</p>
             </div>
             <div class="mdui-divider"></div>
@@ -50,29 +50,30 @@
 <!--        备份/恢复-->
         <div class="mdui-card mt" style="border-radius:15px;margin-top: 15px;">
             <div class="mdui-card-primary">
-                <div class="mdui-card-primary-title">备份/恢复</div>
+                <div class="mdui-card-primary-title">备份/恢复(待开发)</div>
                 <div class="mdui-card-primary-subtitle">Backup Restore</div>
             </div>
             <div class="mdui-card-content mdui-typo">
                 <p class="text_s">Tip: 备份/恢复功能将会以JSON文件实现</p>
             </div>
             <div class="mdui-divider"></div>
-            <div style="text-align: center; margin-top: 15px">
+            <div style="text-align: center; margin-top: 15px; margin-bottom: 15px">
                <span style="margin-left: 20px; margin-right: 20px">
                     操作面板：<select class="mdui-select" mdui-select="{position: 'top'}" id="server1">
                         <option>测试服务器</option>
                     </select>
                 </span>
-                <div class="mdui-float-right" style="margin-right: 15px; margin-top: 15px; margin-bottom: 15px">
-                    <button mdui-dialog="{target: '#Restore'}" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
-                        恢复
-                    </button>
-                </div>
-                <div class="mdui-float-right" style="margin-right: 15px; margin-top: 15px; margin-bottom: 15px">
-                    <button class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
-                        备份
-                    </button>
-                </div>
+            </div>
+            <div class="mdui-divider"></div>
+            <div class="mdui-float-right" style="margin-right: 15px; margin-top: 15px; margin-bottom: 15px">
+                <button mdui-dialog="{target: '#Restore'}" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
+                    恢复
+                </button>
+            </div>
+            <div class="mdui-float-right" style="margin-right: 15px; margin-top: 15px; margin-bottom: 15px">
+                <button class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
+                    备份
+                </button>
             </div>
         </div>
 <!--        恢复面板-->
