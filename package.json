@@ -14,6 +14,7 @@
     "babel-runtime": "^6.26.0",
     "core-js": "^3.22.1",
     "jquery": "^3.6.0",
+    "js-file-download": "^0.4.12",
     "mdui": "^1.0.2",
     "mdui.jq": "^2.0.1",
     "vue": "^3.2.13",

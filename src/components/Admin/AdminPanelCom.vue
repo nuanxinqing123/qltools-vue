@@ -198,8 +198,6 @@ export default {
                 // 请求成功
                 switch (res.data !== "") {
                     case res.data.code === 2000:
-                        // res.data.data
-                        // console.log(res.data.data[0].envBinding.split(""))
                         this.AllPanelData = res.data.data
                         break
                 }
