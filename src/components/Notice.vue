@@ -1,5 +1,6 @@
 <template>
     <div id="BodyCon">
+<!--        公告-->
         <div class="box" id="box_notice">
             <!--        公告部分-->
             <div>
@@ -12,6 +13,7 @@
                 </div>
             </div>
         </div>
+<!--        提交-->
         <div class="box" style="margin-top: 35px;">
             <div>
                 <p style="padding-bottom: 10px">变量提交</p>
@@ -48,6 +50,14 @@
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+<!--        成功提示-->
+        <div id="SendOK" class="mdui-dialog" style="display: none;">
+            <div class="mdui-dialog-title" id="dialog-title">Success</div>
+            <div class="mdui-dialog-content" id="dialog-content">您已提交成功</div>
+            <div class="mdui-dialog-actions">
+                <button class="mdui-btn mdui-ripple" mdui-dialog-close>确认</button>
             </div>
         </div>
     </div>
@@ -110,63 +120,56 @@ export default {
         },
         // 发送上传请求
         POSTEnvAdd(){
+            let inst = new mdui.Dialog('#SendOK');
             axios.post("/v1/api/env/add", this.EnvAdd).then((res) => {
                 // 请求成功
                 switch (res.data !== "") {
                     case res.data.code === 2000:
-                        // 添加成功
-                        mdui.snackbar({
-                            message: '上传成功',
-                            position: 'right-top',
-                        });
+                        // 上传成功
+                        document.getElementById("dialog-title").innerText = "Success"
+                        document.getElementById("dialog-content").innerText = "您已提交成功"
+                        inst.toggle()
                         break
                     case res.data.code === 5020:
-                        // 变量名创建失败
-                        mdui.snackbar({
-                            message: '限额已满，禁止提交',
-                            position: 'right-top',
-                        });
+                        // 限额已满，禁止提交
+                        document.getElementById("dialog-title").innerText = "Error"
+                        document.getElementById("dialog-content").innerText = "限额已满，禁止提交"
+                        inst.toggle()
                         break
                     case res.data.code === 5019:
-                        // 变量名创建失败
-                        mdui.snackbar({
-                            message: '上传内容不符合规定, 请检查后再提交',
-                            position: 'right-top',
-                        });
+                        // 上传内容不符合规定, 请检查后再提交
+                        document.getElementById("dialog-title").innerText = "上传内容不符合规定, 请检查后再提交"
+                        document.getElementById("dialog-content").innerText = "限额已满，禁止提交"
+                        inst.toggle()
                         break
                     case res.data.code === 5015:
-                        // 变量名创建失败
-                        mdui.snackbar({
-                            message: '提交服务器或变量名不在白名单',
-                            position: 'right-top',
-                        });
+                        // 提交服务器或变量名不在白名单
+                        document.getElementById("dialog-title").innerText = "提交服务器或变量名不在白名单"
+                        document.getElementById("dialog-content").innerText = "限额已满，禁止提交"
+                        inst.toggle()
                         break
                     case res.data.code === 5016:
-                        // 变量名创建失败
-                        mdui.snackbar({
-                            message: '发生一点小意外，请重新提交',
-                            position: 'right-top',
-                        });
+                        // 发生一点小意外，请重新提交
+                        document.getElementById("dialog-title").innerText = "发生一点小意外，请重新提交"
+                        document.getElementById("dialog-content").innerText = "限额已满，禁止提交"
+                        inst.toggle()
                         break
                     case res.data.code === 5003:
-                        // 变量名创建失败
-                        mdui.snackbar({
-                            message: '服务繁忙,请稍后重试',
-                            position: 'right-top',
-                        });
+                        // 服务繁忙,请稍后重试
+                        document.getElementById("dialog-title").innerText = "服务繁忙,请稍后重试"
+                        document.getElementById("dialog-content").innerText = "限额已满，禁止提交"
+                        inst.toggle()
                         break
                     case res.data.code === 5002:
                         // 传递参数错误
                         if (res.data.data === "") {
-                            mdui.snackbar({
-                                message: '服务繁忙',
-                                position: 'right-top',
-                            });
+                            document.getElementById("dialog-title").innerText = "服务繁忙,请稍后重试"
+                            document.getElementById("dialog-content").innerText = "限额已满，禁止提交"
+                            inst.toggle()
                         } else {
-                            mdui.snackbar({
-                                message: res.data.msg,
-                                position: 'right-top',
-                            });
+                            document.getElementById("dialog-title").innerText = res.data.msg
+                            document.getElementById("dialog-content").innerText = "限额已满，禁止提交"
+                            inst.toggle()
                         }
                         break
                 }
