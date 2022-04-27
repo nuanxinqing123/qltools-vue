@@ -121,7 +121,7 @@
             </div>
         </div>
 <!--        成功提示-->
-        <div id="SendOK" class="mdui-dialog" style="display: block;">
+        <div id="SendOK" class="mdui-dialog" style="display: none;">
             <div class="mdui-dialog-title">任务提示</div>
             <div class="mdui-dialog-content">操作已进入任务队列, 请稍后前往青龙面板查看结果</div>
             <div class="mdui-dialog-actions">
