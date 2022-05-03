@@ -129,6 +129,10 @@ export default {
                         document.getElementById("dialog-title").innerText = "Success"
                         document.getElementById("dialog-content").innerText = "您已提交成功"
                         inst.toggle()
+
+                        // setTimeout(() => {
+                        //     location.reload()
+                        // }, 3000)
                         break
                     case res.data.code === 5020:
                         // 限额已满，禁止提交
@@ -138,37 +142,43 @@ export default {
                         break
                     case res.data.code === 5019:
                         // 上传内容不符合规定, 请检查后再提交
-                        document.getElementById("dialog-title").innerText = "上传内容不符合规定, 请检查后再提交"
-                        document.getElementById("dialog-content").innerText = "限额已满，禁止提交"
+                        document.getElementById("dialog-title").innerText = "Error"
+                        document.getElementById("dialog-content").innerText = "上传内容不符合规定, 请检查后再提交"
                         inst.toggle()
                         break
                     case res.data.code === 5015:
                         // 提交服务器或变量名不在白名单
-                        document.getElementById("dialog-title").innerText = "提交服务器或变量名不在白名单"
-                        document.getElementById("dialog-content").innerText = "限额已满，禁止提交"
+                        document.getElementById("dialog-title").innerText = "Error"
+                        document.getElementById("dialog-content").innerText = "提交服务器或变量名不在白名单"
                         inst.toggle()
                         break
                     case res.data.code === 5016:
                         // 发生一点小意外，请重新提交
-                        document.getElementById("dialog-title").innerText = "发生一点小意外，请重新提交"
-                        document.getElementById("dialog-content").innerText = "限额已满，禁止提交"
+                        document.getElementById("dialog-title").innerText = "Error"
+                        document.getElementById("dialog-content").innerText = "发生一点小意外，请重新提交"
+                        inst.toggle()
+                        break
+                    case res.data.code === 5024:
+                        // 服务繁忙,请稍后重试
+                        document.getElementById("dialog-title").innerText = "Error"
+                        document.getElementById("dialog-content").innerText = "禁止提交重复数据"
                         inst.toggle()
                         break
                     case res.data.code === 5003:
                         // 服务繁忙,请稍后重试
-                        document.getElementById("dialog-title").innerText = "服务繁忙,请稍后重试"
-                        document.getElementById("dialog-content").innerText = "限额已满，禁止提交"
+                        document.getElementById("dialog-title").innerText = "Error"
+                        document.getElementById("dialog-content").innerText = "服务繁忙,请稍后重试"
                         inst.toggle()
                         break
                     case res.data.code === 5002:
                         // 传递参数错误
                         if (res.data.data === "") {
-                            document.getElementById("dialog-title").innerText = "服务繁忙,请稍后重试"
-                            document.getElementById("dialog-content").innerText = "限额已满，禁止提交"
+                            document.getElementById("dialog-title").innerText = "Error"
+                            document.getElementById("dialog-content").innerText = "服务繁忙,请稍后重试"
                             inst.toggle()
                         } else {
-                            document.getElementById("dialog-title").innerText = res.data.msg
-                            document.getElementById("dialog-content").innerText = "限额已满，禁止提交"
+                            document.getElementById("dialog-title").innerText = "Error"
+                            document.getElementById("dialog-content").innerText = JSON.parse(res.data.msg)
                             inst.toggle()
                         }
                         break

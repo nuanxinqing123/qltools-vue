@@ -61,7 +61,7 @@ const routes = [
     name: 'adminTransfer',
     meta: {
       requireAuth: true,
-      title: '迁移/复制管理'
+      title: '容器管理'
     },
     component: () => import('../views/Admin/AdminTransferView'),
   },

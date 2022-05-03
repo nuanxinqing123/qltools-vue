@@ -246,11 +246,35 @@ export default {
                     position: 'right-top',
                 });
             })
+        },
+        // 版本更新提示
+        GetUpdateAd(){
+            axios.get("/v2/api/check/version").then((res) => {
+                // 请求成功
+                switch (res.data !== "") {
+                    case res.data.code === 2000:
+                        this.UpdateSoft = res.data.data
+                        if (this.UpdateSoft.Update === true) {
+                            mdui.snackbar({
+                                message: "有新版本可用",
+                                position: 'right-top',
+                            });
+                        }
+                        break
+                }
+            }).catch((error) => {
+                // 请求失败
+                mdui.snackbar({
+                    message: error,
+                    position: 'right-top',
+                });
+            })
         }
     },
     mounted() {
         this.GetIPData()
         this.GetAdminInfo()
+        this.GetUpdateAd()
     }
 }
 </script>

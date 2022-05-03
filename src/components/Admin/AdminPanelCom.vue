@@ -13,7 +13,8 @@
         <!--        面板管理-->
         <div class="mdui-card mt" style="border-radius:15px;margin-top: 15px;">
             <div class="mdui-card-primary">
-                <div class="mdui-card-primary-title">Set Panel</div>
+                <div class="mdui-card-primary-title">设置面板</div>
+                <div class="mdui-card-primary-subtitle">Set Panel</div>
             </div>
             <div class="mdui-card-menu">
                 <button @click="OpenPanelAdd()" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-grey mdui-text-color-white">
