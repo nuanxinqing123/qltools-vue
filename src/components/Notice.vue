@@ -159,9 +159,21 @@ export default {
                         inst.toggle()
                         break
                     case res.data.code === 5024:
-                        // 服务繁忙,请稍后重试
+                        // 禁止提交重复数据
                         document.getElementById("dialog-title").innerText = "Error"
                         document.getElementById("dialog-content").innerText = "禁止提交重复数据"
+                        inst.toggle()
+                        break
+                    case res.data.code === 5025:
+                        // 变量已被管理员禁止提交
+                        document.getElementById("dialog-title").innerText = "Error"
+                        document.getElementById("dialog-content").innerText = "变量已被管理员禁止提交"
+                        inst.toggle()
+                        break
+                    case res.data.code === 5026:
+                        // 今日提交已到达上限
+                        document.getElementById("dialog-title").innerText = "Error"
+                        document.getElementById("dialog-content").innerText = "今日提交已到达上限"
                         inst.toggle()
                         break
                     case res.data.code === 5003:
