@@ -3,8 +3,23 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name: "App",
+    methods:{
+        // 设置背景图
+        BG: function () {
+            axios.get("/v1/api/set/setting?key=backgroundImage").then((res) => {
+                if (res.data.data["value"] !== ""){
+                    document.body.style = `background: url("` + res.data.data["value"] + `");`
+                }
+            })
+        }
+    },
+    mounted() {
+        this.BG()
+    }
 }
 </script>
 
