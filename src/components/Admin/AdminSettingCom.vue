@@ -6,7 +6,7 @@
                 <div class="mdui-card-primary-subtitle">Web Settings</div>
             </div>
             <div class="mdui-card-content mdui-typo">
-                <p class="text_s">网站设置是通过修改一些配置信息来提升网站的独立性和对用户的感知</p>
+                <p class="text_s">网站设置是通过修改一些配置信息来提升网站的独立性和对用户的感知（控制）</p>
             </div>
         </div>
         <div class="mdui-card mt" style="border-radius:15px;margin-top: 15px;">
@@ -14,9 +14,37 @@
                 <div class="mdui-card-primary-title">Settings</div>
             </div>
             <div>
+                <!--       网站背景图-->
+                <div class="mdui-card-primary" style="padding-top: 0; padding-bottom: 0">
+                    <div class="mdui-card-content" style="padding-bottom: 0">网站背景图</div>
+                </div>
+                <div id="background-image">
+                    <div class="mdui-textfield">
+                        <input class="mdui-textfield-input" type="text" placeholder="图片URL地址" v-model="backgroundImage"/>
+                        <div class="mdui-textfield-helper">此设置会更改前后台的背景图, 支持图床和直接返回图片的API接口</div>
+                    </div>
+                </div>
+                <div class="mdui-card-primary" style="padding-top: 0; padding-bottom: 0">
+                    <div class="mdui-card-content">提交限制</div>
+                </div>
+                <div id="submission-restrictions">
+                    每个IP限制每天提交&ensp;
+                    <input type="number" v-model="ipCount"/>
+                    &ensp;次 （默认空数据，不填写则模式没有上传次数限制）
+                </div>
+                <!--       变量黑名单-->
+                <div class="mdui-card-primary" style="padding-top: 0; padding-bottom: 0">
+                    <div class="mdui-card-content" style="padding-bottom: 0">变量黑名单【请使用<span style="color: red;"> @ </span>符号分隔】</div>
+                </div>
+                <div id="textfield">
+                    <div class="mdui-textfield">
+                        <textarea class="mdui-textfield-input" rows="5" v-model="blacklist"></textarea>
+                        <div class="mdui-textfield-helper">变量请使用<span style="color: red;"> @ </span>符号分隔，用户上传时候会用正则去匹配是否处于黑名单</div>
+                    </div>
+                </div>
                 <!--            公告-->
-                <div class="mdui-card-primary">
-                    <div class="mdui-card-primary-subtitle">设置公告</div>
+                <div class="mdui-card-primary" style="padding-top: 0; padding-bottom: 0">
+                    <div class="mdui-card-content">设置公告</div>
                 </div>
                 <div id="notice">
                     <div style="border: 1px solid #ccc">
@@ -34,11 +62,12 @@
                             @onCreated="handleCreated"
                         />
                     </div>
-                    <div class="mdui-float-right" style="margin-right: 15px; margin-top: 15px; margin-bottom: 15px">
-                        <button @click="SendSettings" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
-                            提交设置
-                        </button>
-                    </div>
+                </div>
+                <!--                提交按钮-->
+                <div class="mdui-float-right" style="margin-right: 15px; margin-top: 15px; margin-bottom: 15px">
+                    <button @click="SendSettings" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
+                        提交设置
+                    </button>
                 </div>
             </div>
         </div>
@@ -59,7 +88,10 @@ export default {
     data() {
         return {
             Settings: [],
-            valueHtml: ""
+            valueHtml: "",
+            blacklist: "",
+            backgroundImage: "",
+            ipCount: 0,
         }
     },
     setup() {
@@ -91,7 +123,10 @@ export default {
         // 修改网站配置
         SendSettings(){
             this.SendSettings = [
-                {key: "notice", value: this.valueHtml}
+                {key: "notice", value: this.valueHtml},
+                {key: "blacklist", value: this.blacklist},
+                {key: "backgroundImage", value: this.backgroundImage},
+                {key: "ipCount", value: this.ipCount.toString()}
             ]
             axios.put("/v2/api/set/settings", this.SendSettings).then((res) => {
                 // 请求成功
@@ -121,13 +156,24 @@ export default {
                 // 请求成功
                 switch (res.data !== "") {
                     case res.data.code === 2000:
-                        this.valueHtml = res.data.data[0].value
+                        if (res.data.data[0] !== undefined){
+                            this.valueHtml = res.data.data[0].value
+                        }
+                        if (res.data.data[1] !== undefined){
+                            this.blacklist = res.data.data[1].value
+                        }
+                        if (res.data.data[2] !== undefined){
+                            this.backgroundImage = res.data.data[2].value
+                        }
+                        if (res.data.data[3] !== undefined){
+                            this.ipCount = parseInt(res.data.data[3].value)
+                        }
                 }
             }).catch((error) => {
                 // 请求失败
                 console.log(error)
                 mdui.snackbar({
-                    message: "公告获取失败,快点发布一个公告吧",
+                    message: "获取网站配置,快点添加一些配置吧",
                     position: 'right-top',
                 });
             })
@@ -140,5 +186,20 @@ export default {
 </script>
 
 <style scoped>
-
+#textfield{
+    margin-right: 32px;
+    margin-left: 32px;
+}
+#notice{
+    margin-right: 32px;
+    margin-left: 32px;
+}
+#background-image{
+    margin-right: 32px;
+    margin-left: 32px;
+}
+#submission-restrictions {
+    margin-right: 32px;
+    margin-left: 32px;
+}
 </style>
