@@ -76,7 +76,7 @@
         </div>
 <!--        版本更新-->
         <div id="version" class="mdui-dialog" style="top: 210px; display: none;">
-            <div class="mdui-dialog-title">版本更新通知</div>
+            <div class="mdui-dialog-title">检查版本【本地版本：{{this.UpdateSoft.Version}}】</div>
             <div class="mdui-dialog-content mdui-typo" style="height: 407px;">
                 <div id="Notice"></div>
                 <div class="mdui-dialog-actions">
@@ -116,6 +116,7 @@ export default {
             AdminInfo : 'Admin',
             UpdateSoft:{
                 Update: false,
+                Version: "",
                 Notice: ""
             },
         }
