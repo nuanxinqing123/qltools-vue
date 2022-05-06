@@ -13,6 +13,10 @@
                 <i class="mdui-list-item-icon mdui-icon material-icons">apps</i>
                 <div class="mdui-list-item-content">面板管理</div>
             </a>
+            <a @click="this.OpenURL('/#/admin/plugin/')" class="mdui-list-item">
+                <i class="mdui-list-item-icon mdui-icon material-icons">local_play</i>
+                <div class="mdui-list-item-content">插件管理</div>
+            </a>
             <a @click="this.OpenURL('/#/admin/transfer/')" class="mdui-list-item">
                 <i class="mdui-list-item-icon mdui-icon material-icons">import_export</i>
                 <div class="mdui-list-item-content">容器管理</div>

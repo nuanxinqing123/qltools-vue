@@ -176,6 +176,18 @@ export default {
                         document.getElementById("dialog-content").innerText = "今日提交已到达上限"
                         inst.toggle()
                         break
+                    case res.data.code === 5028:
+                        // JS执行发生错误, 系统错误
+                        document.getElementById("dialog-title").innerText = "Error"
+                        document.getElementById("dialog-content").innerText = JSON.parse(res.data.msg)
+                        inst.toggle()
+                        break
+                    case res.data.code === 5029:
+                        // 提交数据已被管理员拒绝
+                        document.getElementById("dialog-title").innerText = "Error"
+                        document.getElementById("dialog-content").innerText = "提交数据已被管理员拒绝，原因：" + JSON.parse(res.data.msg)
+                        inst.toggle()
+                        break
                     case res.data.code === 5003:
                         // 服务繁忙,请稍后重试
                         document.getElementById("dialog-title").innerText = "Error"

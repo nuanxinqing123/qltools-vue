@@ -57,6 +57,15 @@ const routes = [
     component: () => import('../views/Admin/AdminPanelView'),
   },
   {
+    path: '/admin/plugin',
+    name: 'adminPlugin',
+    meta: {
+      requireAuth: true,
+      title: '插件管理'
+    },
+    component: () => import('../views/Admin/AdminPluginView'),
+  },
+  {
     path: '/admin/transfer',
     name: 'adminTransfer',
     meta: {
