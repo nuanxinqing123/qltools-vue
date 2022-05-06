@@ -60,5 +60,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+	.mdui-drawer{
+		backdrop-filter: blur(15px) brightness(110%);
+	}
 </style>

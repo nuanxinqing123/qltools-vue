@@ -23,23 +23,23 @@
             <div class="mdui-divider"></div>
             <div style="text-align: center; margin-top: 15px">
                 <span style="margin-left: 20px; margin-right: 20px">
-                    A面板：<select class="mdui-select" @click="UpdateServerID('A', $event)" id="server1">
-                        <option>请选择面板</option>
-                        <option v-for="d in AllPanelData" :key="d" :value="d['name']">{{d['name']}}</option>
-                    </select>
+                    A面板：<m-spinner  @click="UpdateServerID('A', $event)" id="server1">
+                        <m-spinner-item>请选择面板</m-spinner-item>
+                        <m-spinner-item v-for="d in AllPanelData" :key="d" :value="d['name']">{{d['name']}}</m-spinner-item>
+                    </m-spinner>
                 </span>
                 <span style="margin-left: 20px; margin-right: 20px">
-                    B面板：<select class="mdui-select" @click="UpdateServerID('B', $event)" id="server2">
-                        <option>请选择面板</option>
-                        <option v-for="d in AllPanelData" :key="d" :value="d['name']">{{d['name']}}</option>
-                    </select>
+                    B面板：<m-spinner  @click="UpdateServerID('B', $event)" id="server2">
+                        <m-spinner-item>请选择面板</m-spinner-item>
+                        <m-spinner-item v-for="d in AllPanelData" :key="d" :value="d['name']">{{d['name']}}</m-spinner-item>
+                    </m-spinner>
                 </span>
 
                 <span style="margin-left: 20px; margin-right: 20px">
-                    操作：<select class="mdui-select" @click="UpdateData($event)" id="function">
-                        <option>复制</option>
-                        <option>迁移</option>
-                    </select>
+                    操作：<m-spinner  @click="UpdateData($event)" id="function">
+                        <m-spinner-item>复制</m-spinner-item>
+                        <m-spinner-item>迁移</m-spinner-item>
+                    </m-spinner>
                 </span>
             </div>
             <div class="mdui-float-right" style="margin-right: 15px; margin-top: 15px; margin-bottom: 15px">
@@ -62,10 +62,10 @@
             <div class="mdui-divider"></div>
             <div style="text-align: center; margin-top: 15px; margin-bottom: 15px">
                <span style="margin-left: 20px; margin-right: 20px">
-                    操作面板：<select class="mdui-select" @click="UpdateBRServerID($event)" id="server1">
-                        <option>请选择面板</option>
-                        <option v-for="d in AllPanelData" :key="d" :value="d['name']">{{d['name']}}</option>
-                    </select>
+                    操作面板：<m-spinner  @click="UpdateBRServerID($event)" id="server1">
+                        <m-spinner-item>请选择面板</m-spinner-item>
+                        <m-spinner-item v-for="d in AllPanelData" :key="d" :value="d['name']">{{d['name']}}</m-spinner-item>
+                    </m-spinner>
                 </span>
             </div>
             <div class="mdui-divider"></div>
