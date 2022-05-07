@@ -34,5 +34,7 @@ body {
     background-attachment:fixed;
     background-size:cover;
     background-color:rgba(255,255,255,.6);
+	/* 下拉框的boredr选中boder效果删除 仅仅保留选中字体颜色差异 */
+	--color-border:none;
 }
 </style>
