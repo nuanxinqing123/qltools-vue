@@ -135,7 +135,7 @@ function main(env) {
         <div id="pluginUpload" class="mdui-dialog" style="top: 210px; display: none;">
             <div class="mdui-dialog-title">上传插件</div>
             <div class="mdui-dialog-content mdui-typo" style="height: 407px;">
-                <input type= "file" @change="UpdateFile" id="pluginFile"/>
+                <input type= "file" @change="UpdateFile" id="pluginFile" accept="application/javascript"/>
                 <div class="mdui-dialog-actions">
                     <button @click="SendFile" class="mdui-btn mdui-color-green-700 mdui-text-color-white btn" mdui-dialog-close>
                         执行操作
