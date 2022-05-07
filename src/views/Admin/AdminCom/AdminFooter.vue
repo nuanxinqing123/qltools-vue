@@ -32,7 +32,7 @@ footer {
     box-shadow:5px 0 5px 0 rgb(60 64 67 / 30%),0 1px 3px 1px rgb(60 64 67 / 15%);
     backdrop-filter:blur(15px) brightness(110%);
 }
-@media screen and (min-height:800px){footer{position: fixed;bottom: 0;width: 100%;}}
+@media screen and (min-height:800px){footer{bottom: 0;width: 100%;}}
 st {
     font-weight:600;
     color:#475bca;
