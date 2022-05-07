@@ -52,8 +52,7 @@
                 <div class="mdui-card-primary-subtitle">Plug Development Template</div>
             </div>
             <div class="mdui-card-content mdui-typo">
-                <highlightjs language='javascript' code='
-// [name:Cookie检测（demo 插件开发演示）]
+                <highlightjs language='javascript' code='// [name:Cookie检测（demo 插件开发演示）]
 
 // 第一行为插件名称， 在后台显示的使用会用到
 

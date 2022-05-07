@@ -7,7 +7,7 @@
             </div>
             <div class="mdui-card-content mdui-typo">
                 <p class="text_s">变量管理并非管理容器内的变量，而是管理前端上传的允许变量名。可以搭配正则表达式过滤恶意提交，正则表达式为空则代表允许所有内容</p>
-                <p class="text_s">某东的正则表达式（举例）：pt_key=.*?pt_pin=.*?;</p>
+                <p class="text_s">某东的正则表达式（举例）：pt_key=.*?pt_pin=.*?; &ensp;&ensp;&ensp;&ensp;【更新模式正则：pt_pin=.*?】</p>
                 <p class="text_s">某手极速版的正则（举例）：kuaishou.api_st=.*?;</p>
             </div>
         </div>
@@ -32,9 +32,12 @@
                         <tr>
                             <th>变量名</th>
                             <th>变量限额</th>
-                            <th>匹配正则</th>
+                            <th>变量匹配正则</th>
                             <th>上传模式</th>
-                            <th>分割符</th>
+                            <th>分割符(合并)</th>
+                            <th>更新正则(更新)</th>
+                            <th>启用插件</th>
+                            <th>插件名称</th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -44,10 +47,14 @@
                             <th>{{d.Quantity}}</th>
                             <th>{{d.Regex}}</th>
                             <th v-if="d.Mode === 1">新建模式</th>
-                            <th v-else >合并模式</th>
+                            <th v-else-if="d.Mode === 2">合并模式</th>
+                            <th v-else>更新模式</th>
                             <th>{{d.Division}}</th>
+                            <th>{{d.ReUpdate}}</th>
+                            <th>{{d.IsPlugin}}</th>
+                            <th>{{d.PluginName}}</th>
                             <th>
-                                <button @click="OpenEnvUpdate(d.ID, d.Name, d.Quantity, d.Regex, d.Mode, d.Division)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue mdui-text-color-white">
+                                <button @click="OpenEnvUpdate(d.ID, d.Name, d.Quantity, d.Regex, d.Mode, d.Division, d.ReUpdate, d.IsPlugin, d.PluginName)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue mdui-text-color-white">
                                     修改
                                 </button>
                                 &ensp;&ensp;
@@ -74,7 +81,7 @@
                         <input class="mdui-textfield-input" type="number" id="envQuantity" placeholder="必填" v-model="AddEnvName.envQuantity">
                     </div>
                     <div class="mdui-textfield">
-                        <label class="mdui-textfield-label">匹配正则</label>
+                        <label class="mdui-textfield-label">变量匹配正则</label>
                         <input class="mdui-textfield-input" type="text" id="envRegex" placeholder="选填" v-model="AddEnvName.envRegex">
                     </div>
                     <div class="mdui-textfield">
@@ -82,11 +89,27 @@
                         <select class="mdui-select" id="envMode" @change="SwitchEnvAddMode($event)">
                             <option>新建模式</option>
                             <option>合并模式</option>
+                            <option>更新模式</option>
                         </select>
                     </div>
-                    <div class="mdui-textfield">
+                    <div id="delimiter" class="mdui-textfield" style="display: none">
                         <label class="mdui-textfield-label">分隔符</label>
-                        <input disabled="disabled" class="mdui-textfield-input" type="text" id="envDivision" placeholder="合并模式：必填" v-model="AddEnvName.envDivision">
+                        <input class="mdui-textfield-input" type="text" id="envDivision" placeholder="合并模式：必填" v-model="AddEnvName.envDivision">
+                    </div>
+                    <div id="updateRe" class="mdui-textfield" style="display: none">
+                        <label class="mdui-textfield-label">更新匹配正则</label>
+                        <input class="mdui-textfield-input" type="text" id="envDivision" placeholder="更新模式：必填" v-model="AddEnvName.envReUpdate">
+                    </div>
+                    <div class="mdui-textfield">
+                        <label class="mdui-textfield-label">启用插件</label>
+                        <label class="mdui-switch">
+                            <input v-model="AddEnvName.envIsPlugin" @change="ChangeAddPlugin('ad')" type="checkbox"/>
+                            <i class="mdui-switch-icon"></i>
+                        </label>
+                    </div>
+                    <div id="add_plugin" class="mdui-textfield" style="display: none">
+                        绑定插件：
+                        <select class="mdui-select" id="in_plugin_select"></select>
                     </div>
                     <div class="mdui-dialog-actions">
                         <button class="mdui-btn mdui-color-green-700 mdui-text-color-white btn">
@@ -118,7 +141,7 @@
                         <input class="mdui-textfield-input" type="number" placeholder="必填" v-model="EnvUpdate.envQuantity">
                     </div>
                     <div class="mdui-textfield">
-                        <label class="mdui-textfield-label">匹配正则</label>
+                        <label class="mdui-textfield-label">变量匹配正则</label>
                         <input class="mdui-textfield-input" type="text" placeholder="选填" v-model="EnvUpdate.envRegex">
                     </div>
                     <div class="mdui-textfield">
@@ -127,24 +150,42 @@
                             <select class="mdui-select" id="envMode" @change="SwitchEnvUpdateMode($event)">
                                 <option selected = "selected">新建模式</option>
                                 <option>合并模式</option>
+                                <option>更新模式</option>
+                            </select>
+                        </span>
+                        <span v-else-if="this.EnvUpdate.envMode === 2">
+                            <select class="mdui-select" id="envMode" @change="SwitchEnvUpdateMode($event)">
+                                <option>新建模式</option>
+                                <option selected = "selected">合并模式</option>
+                                <option>更新模式</option>
                             </select>
                         </span>
                         <span v-else>
                             <select class="mdui-select" id="envMode" @change="SwitchEnvUpdateMode($event)">
                                 <option>新建模式</option>
-                                <option selected = "selected">合并模式</option>
+                                <option>合并模式</option>
+                                <option selected = "selected">更新模式</option>
                             </select>
                         </span>
                     </div>
-                    <div class="mdui-textfield">
+                    <div id="u_delimiter" class="mdui-textfield" style="display: none">
                         <label class="mdui-textfield-label">分隔符</label>
-                        <span v-if="this.EnvUpdate.envMode === 1">
-                            <input disabled="disabled" class="mdui-textfield-input" type="text" id="envDivisionUp" placeholder="合并模式：必填" v-model="EnvUpdate.envDivision">
-                        </span>
-                        <span v-else>
-                            <input class="mdui-textfield-input" type="text" id="envDivisionUp" placeholder="合并模式：必填" v-model="EnvUpdate.envDivision">
-                        </span>
-
+                        <input class="mdui-textfield-input" type="text" id="envDivision" placeholder="合并模式：必填" v-model="EnvUpdate.envDivision">
+                    </div>
+                    <div id="u_updateRe" class="mdui-textfield" style="display: none">
+                        <label class="mdui-textfield-label">更新匹配正则</label>
+                        <input class="mdui-textfield-input" type="text" id="envDivision" placeholder="更新模式：必填" v-model="EnvUpdate.envReUpdate">
+                    </div>
+                    <div class="mdui-textfield">
+                        <label class="mdui-textfield-label">启用插件</label>
+                        <label class="mdui-switch">
+                            <input v-model="EnvUpdate.envIsPlugin" @change="ChangeUpdatePluginZ()" type="checkbox"/>
+                            <i class="mdui-switch-icon"></i>
+                        </label>
+                    </div>
+                    <div id="up_plugin" class="mdui-textfield" style="display: none">
+                        绑定插件：
+                        <select class="mdui-select" id="up_plugin_select"></select>
                     </div>
                     <div class="mdui-dialog-actions">
                         <button class="mdui-btn mdui-color-green-700 mdui-text-color-white btn">
@@ -170,7 +211,10 @@ export default {
                 envQuantity: 0,
                 envRegex: "",
                 envMode: 1,
-                envDivision: ""
+                envDivision: "",
+                envReUpdate: "",
+                envIsPlugin: false,
+                envPluginName: ""
             },
             EnvAll: [{
                 ID: 0,
@@ -178,7 +222,10 @@ export default {
                 Quantity: 0,
                 Regex: "",
                 Mode: 1,
-                Division: ""
+                Division: "",
+                ReUpdate: "",
+                IsPlugin: false,
+                PluginName: ""
             }],
             EnvDel: {
                 envID: 0
@@ -189,8 +236,15 @@ export default {
                 envQuantity: 0,
                 envRegex: "",
                 envMode: 1,
-                envDivision: ""
-            }
+                envDivision: "",
+                envReUpdate: "",
+                envIsPlugin: false,
+                envPluginName: ""
+            },
+            JsAll: [{
+                FileName: "",
+                FileIDName: ""
+            }]
         }
     },
     methods: {
@@ -199,6 +253,24 @@ export default {
             let inst = new mdui.Dialog('#envAdd');
             inst.toggle()
         },
+        // 修改新增插件状态
+        ChangeAddPlugin(){
+            if (this.AddEnvName.envIsPlugin === true) {
+                document.getElementById("add_plugin").style.display = "inline"
+            } else {
+                document.getElementById("add_plugin").style.display = "none"
+            }
+        },
+        // 修改修改插件状态
+        ChangeUpdatePluginZ(){
+            if (this.EnvUpdate.envIsPlugin === true) {
+                this.EnvUpdate.envPluginName = this.JsAll[0].FileName
+                document.getElementById("up_plugin").style.display = "inline"
+            } else {
+                this.EnvUpdate.envPluginName = ""
+                document.getElementById("up_plugin").style.display = "none"
+            }
+        },
         // 打开删除
         OpenEnvDel(envID){
             this.EnvDel.envID = envID
@@ -206,13 +278,37 @@ export default {
             inst.toggle()
         },
         // 打开修改
-        OpenEnvUpdate(id, name, quantity, regex, mode, division){
+        OpenEnvUpdate(id, name, quantity, regex, mode, division, ReUpdate, IsPlugin, PluginName){
             this.EnvUpdate.envID = id
             this.EnvUpdate.envName = name
             this.EnvUpdate.envQuantity = quantity
             this.EnvUpdate.envRegex = regex
             this.EnvUpdate.envMode = mode
             this.EnvUpdate.envDivision = division
+            this.EnvUpdate.envReUpdate = ReUpdate
+            this.EnvUpdate.envIsPlugin = IsPlugin
+            this.EnvUpdate.envPluginName = PluginName
+            if (this.EnvUpdate.envMode === 1){
+                // 新建模式
+                document.getElementById("u_delimiter").style.display = "none"
+                document.getElementById("u_updateRe").style.display = "none"
+            } else if (this.EnvUpdate.envMode === 2) {
+                // 合并模式
+                document.getElementById("u_delimiter").style.display = "inline"
+                document.getElementById("u_updateRe").style.display = "none"
+            } else {
+                // 更新模式
+                document.getElementById("u_delimiter").style.display = "none"
+                document.getElementById("u_updateRe").style.display = "inline"
+            }
+
+            // 是否显示开启插件
+            if (this.EnvUpdate.envIsPlugin === true) {
+                document.getElementById("up_plugin").style.display = "inline"
+            } else {
+                document.getElementById("up_plugin").style.display = "none"
+            }
+
             let inst = new mdui.Dialog('#envUpdate');
             inst.toggle()
         },
@@ -336,13 +432,19 @@ export default {
             let iidd = e.target.selectedIndex
             if (iidd === 0){
                 // 新建模式
-                mdui.$("#envDivision").attr("disabled", "disabled")
-                this.AddEnvName.envDivision = ""
                 this.AddEnvName.envMode = 1
-            } else {
+                document.getElementById("delimiter").style.display = "none"
+                document.getElementById("updateRe").style.display = "none"
+            } else if (iidd === 1) {
                 // 合并模式
-                mdui.$("#envDivision").removeAttr("disabled")
                 this.AddEnvName.envMode = 2
+                document.getElementById("delimiter").style.display = "inline"
+                document.getElementById("updateRe").style.display = "none"
+            } else {
+                // 更新模式
+                this.AddEnvName.envMode = 3
+                document.getElementById("delimiter").style.display = "none"
+                document.getElementById("updateRe").style.display = "inline"
             }
         },
         // 切换修改上传模式
@@ -350,17 +452,49 @@ export default {
             let iidd = e.target.selectedIndex
             if (iidd === 0){
                 // 新建模式
-                mdui.$("#envDivisionUp").attr("disabled", "disabled")
-                this.EnvUpdate.envDivision = ""
                 this.EnvUpdate.envMode = 1
-            } else {
+                document.getElementById("u_delimiter").style.display = "none"
+                document.getElementById("u_updateRe").style.display = "none"
+            } else if (iidd === 1) {
                 // 合并模式
-                mdui.$("#envDivisionUp").removeAttr("disabled")
                 this.EnvUpdate.envMode = 2
+                document.getElementById("u_delimiter").style.display = "inline"
+                document.getElementById("u_updateRe").style.display = "none"
+            } else {
+                // 更新模式
+                this.EnvUpdate.envMode = 3
+                document.getElementById("u_delimiter").style.display = "none"
+                document.getElementById("u_updateRe").style.display = "inline"
             }
-        }
+        },
+        // 获取所有插件信息
+        GetJsAll(){
+            axios.get("/v2/api/javascript/readall").then((res) => {
+                this.JsAll = res.data.data
+
+                // 初始化绑定插件列表
+                let $ = mdui.$;
+                let in_plugin_select = new mdui.Select('#in_plugin_select');
+                let up_plugin_select = new mdui.Select('#up_plugin_select');
+                for (let i = 0; i < this.JsAll.length; i++) {
+                    $('#in_plugin_select').append('<option>' + this.JsAll[i].FileIDName + '</option>');
+                    $('#up_plugin_select').append('<option>' + this.JsAll[i].FileIDName + '</option>');
+                }
+
+                // 初始化插件列表
+                in_plugin_select.handleUpdate();
+                up_plugin_select.handleUpdate();
+            }).catch((error) => {
+                // 请求失败
+                mdui.snackbar({
+                    message: error,
+                    position: 'right-top',
+                });
+            })
+        },
     },
     mounted() {
+        this.GetJsAll()
         this.GetEnvAll()
     }
 }
