@@ -29,17 +29,17 @@
 					<div style="width: 100%">
 						<div style="margin-top: 8px">
 							服务器：
-							<m-spinner @change="changeEnvData($event)" id="server">
-								<m-spinner-item v-for="d in InitIndexData['serverData']" :key="d" :value="d['PanelName']">
-									{{d['PanelName']}}
-								</m-spinner-item>
-							</m-spinner>
+							<select class="mdui-select" @change="changeEnvData($event)" id="server">
+<!--								<option v-for="d in InitIndexData['serverData']" :key="d" :value="d['PanelName']">-->
+<!--									{{d['PanelName']}}-->
+<!--								</option>-->
+							</select>
 						</div>
 						<div style="margin-top: 8px">
 							变量组：
-							<m-spinner  @change="changeNum($event)" id="env">
-								<m-spinner-item v-for="d in this.EnvData" :key="d" :value="d['name']">{{d['name']}}</m-spinner-item>
-							</m-spinner>
+							<select class="mdui-select" @change="changeNum($event)" id="env">
+<!--								<option v-for="d in this.EnvData" :key="d" :value="d['name']">{{d['name']}}</option>-->
+							</select>
 						</div>
 						<div style="margin-top: 8px; font-size: 16px">
 							剩余位置：<span id="num">0</span>
@@ -78,13 +78,13 @@
 <script>
 	import axios from "axios";
 	import mdui from "mdui";
-	
+
 	export default {
-		
+
 		name: "NoticeCom",
 		data() {
 			return {
-				InitIndexData: {},
+				InitIndexData: [],
 				EnvData: [],
 				EnvAdd: {
 					serverID: 0,
@@ -105,6 +105,23 @@
 					document.getElementById("num").innerText = this.InitIndexData['serverData'][0]['envData'][0][
 						'quantity'
 					]
+
+          // 初始化Select
+            let server = new mdui.Select('#server');
+            let env = new mdui.Select('#env');
+            let s_list = ""
+            let e_list = ""
+            for (let i = 0; i < this.InitIndexData['serverData'].length; i++) {
+                s_list = s_list + "<option>" + this.InitIndexData['serverData'][i]["PanelName"] + '</option>'
+            }
+            for (let j = 0; j < this.InitIndexData['serverData'][0].envData.length; j++) {
+                e_list = e_list + "<option>" + this.InitIndexData['serverData'][0].envData[j]["name"] + '</option>'
+            }
+
+            document.getElementById("server").innerHTML = s_list
+            document.getElementById("env").innerHTML = e_list
+            server.handleUpdate();
+            env.handleUpdate();
 				})
 			},
 			// 获取公告
@@ -194,14 +211,13 @@
 						case res.data.code === 5028:
 							// JS执行发生错误, 系统错误
 							document.getElementById("dialog-title").innerText = "Error"
-							document.getElementById("dialog-content").innerText = JSON.parse(res.data.msg)
+							document.getElementById("dialog-content").innerText = res.data.msg
 							inst.toggle()
 							break
 						case res.data.code === 5029:
 							// 提交数据已被管理员拒绝
 							document.getElementById("dialog-title").innerText = "Error"
-							document.getElementById("dialog-content").innerText = "提交数据已被管理员拒绝，原因：" + JSON.parse(
-								res.data.msg)
+							document.getElementById("dialog-content").innerText = "提交数据已被管理员拒绝，原因：" + res.data.msg
 							inst.toggle()
 							break
 						case res.data.code === 5003:

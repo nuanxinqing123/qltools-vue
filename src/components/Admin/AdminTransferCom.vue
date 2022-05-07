@@ -23,23 +23,17 @@
             <div class="mdui-divider"></div>
             <div style="text-align: center; margin-top: 15px">
                 <span style="margin-left: 20px; margin-right: 20px">
-                    A面板：<m-spinner  @click="UpdateServerID('A', $event)" id="server1">
-                        <m-spinner-item>请选择面板</m-spinner-item>
-                        <m-spinner-item v-for="d in AllPanelData" :key="d" :value="d['name']">{{d['name']}}</m-spinner-item>
-                    </m-spinner>
+                    A面板：<select class="mdui-select"  @change="UpdateServerID('A', $event)" id="server1"></select>
                 </span>
                 <span style="margin-left: 20px; margin-right: 20px">
-                    B面板：<m-spinner  @click="UpdateServerID('B', $event)" id="server2">
-                        <m-spinner-item>请选择面板</m-spinner-item>
-                        <m-spinner-item v-for="d in AllPanelData" :key="d" :value="d['name']">{{d['name']}}</m-spinner-item>
-                    </m-spinner>
+                    B面板：<select class="mdui-select"  @change="UpdateServerID('B', $event)" id="server2"></select>
                 </span>
 
                 <span style="margin-left: 20px; margin-right: 20px">
-                    操作：<m-spinner  @click="UpdateData($event)" id="function">
-                        <m-spinner-item>复制</m-spinner-item>
-                        <m-spinner-item>迁移</m-spinner-item>
-                    </m-spinner>
+                    操作：<select mdui-select="{position: 'top'}" @click="UpdateData($event)" id="function">
+                        <option>复制</option>
+                        <option>迁移</option>
+                    </select>
                 </span>
             </div>
             <div class="mdui-float-right" style="margin-right: 15px; margin-top: 15px; margin-bottom: 15px">
@@ -62,10 +56,7 @@
             <div class="mdui-divider"></div>
             <div style="text-align: center; margin-top: 15px; margin-bottom: 15px">
                <span style="margin-left: 20px; margin-right: 20px">
-                    操作面板：<m-spinner  @click="UpdateBRServerID($event)" id="server1">
-                        <m-spinner-item>请选择面板</m-spinner-item>
-                        <m-spinner-item v-for="d in AllPanelData" :key="d" :value="d['name']">{{d['name']}}</m-spinner-item>
-                    </m-spinner>
+                    操作面板：<select class="mdui-select" @change="UpdateBRServerID($event)" id="server3"></select>
                 </span>
             </div>
             <div class="mdui-divider"></div>
@@ -169,11 +160,23 @@ export default {
         GetAllPanelData(){
             axios.get("/v2/api/env/panel/all").then((res) => {
                 // 请求成功
-                switch (res.data !== "") {
-                    case res.data.code === 2000:
-                        this.AllPanelData = res.data.data
-                        break
+                this.AllPanelData = res.data.data
+
+                // 初始化Select
+                let server1 = new mdui.Select('#server1', {position:"top"});
+                let server2 = new mdui.Select('#server2', {position:"top"});
+                let server3 = new mdui.Select('#server3', {position:"top"});
+                let list = ""
+                for (let i = 0; i < this.AllPanelData.length; i++) {
+                    list = list + "<option>" + this.AllPanelData[i].name + '</option>'
                 }
+                // 初始化插件列表
+                document.getElementById("server1").innerHTML = list
+                document.getElementById("server2").innerHTML = list
+                document.getElementById("server3").innerHTML = list
+                server1.handleUpdate();
+                server2.handleUpdate();
+                server3.handleUpdate();
             }).catch((error) => {
                 // 请求失败
                 mdui.snackbar({
@@ -181,6 +184,8 @@ export default {
                     position: 'right-top',
                 });
             })
+
+
         },
         // 修改ServerID
         UpdateServerID(id, e){

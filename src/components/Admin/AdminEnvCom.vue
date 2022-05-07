@@ -103,13 +103,13 @@
                     <div class="mdui-textfield">
                         <label class="mdui-textfield-label">启用插件</label>
                         <label class="mdui-switch">
-                            <input v-model="AddEnvName.envIsPlugin" @change="ChangeAddPlugin('ad')" type="checkbox"/>
+                            <input v-model="AddEnvName.envIsPlugin" @change="ChangeAddPlugin" type="checkbox"/>
                             <i class="mdui-switch-icon"></i>
                         </label>
                     </div>
                     <div id="add_plugin" class="mdui-textfield" style="display: none">
                         绑定插件：
-                        <select class="mdui-select" id="in_plugin_select"></select>
+                        <select class="mdui-select" @change="changInPlugin($event)" id="in_plugin_select"></select>
                     </div>
                     <div class="mdui-dialog-actions">
                         <button class="mdui-btn mdui-color-green-700 mdui-text-color-white btn">
@@ -185,7 +185,7 @@
                     </div>
                     <div id="up_plugin" class="mdui-textfield" style="display: none">
                         绑定插件：
-                        <select class="mdui-select" id="up_plugin_select"></select>
+                        <select class="mdui-select" @change="changeUpPlugin($event)" id="up_plugin_select"></select>
                     </div>
                     <div class="mdui-dialog-actions">
                         <button class="mdui-btn mdui-color-green-700 mdui-text-color-white btn">
@@ -473,15 +473,16 @@ export default {
                 this.JsAll = res.data.data
 
                 // 初始化绑定插件列表
-                let $ = mdui.$;
                 let in_plugin_select = new mdui.Select('#in_plugin_select');
                 let up_plugin_select = new mdui.Select('#up_plugin_select');
+                let list = ""
                 for (let i = 0; i < this.JsAll.length; i++) {
-                    $('#in_plugin_select').append('<option>' + this.JsAll[i].FileIDName + '</option>');
-                    $('#up_plugin_select').append('<option>' + this.JsAll[i].FileIDName + '</option>');
+                    list = list + "<option>" + this.JsAll[i].FileIDName + '</option>'
                 }
 
                 // 初始化插件列表
+                document.getElementById("up_plugin_select").innerHTML = list
+                document.getElementById("in_plugin_select").innerHTML = list
                 in_plugin_select.handleUpdate();
                 up_plugin_select.handleUpdate();
             }).catch((error) => {
@@ -492,6 +493,16 @@ export default {
                 });
             })
         },
+        // 修改选择插件
+        changeUpPlugin(e){
+            let iidd = e.target.selectedIndex
+            this.EnvUpdate.envPluginName = this.JsAll[iidd].FileName
+        },
+        // 新增选择插件
+        changInPlugin(e){
+            let iidd = e.target.selectedIndex
+            this.AddEnvName.envPluginName = this.JsAll[iidd].FileName
+        }
     },
     mounted() {
         this.GetJsAll()
