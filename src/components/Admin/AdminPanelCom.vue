@@ -8,7 +8,7 @@
             <div class="mdui-card-content mdui-typo">
                 <p class="text_s">面板管理可以添加自己的服务容器（青龙面板），用于分散提交的变量到不同的容器来缓解过于集中的压力。利于管理</p>
                 <p class="text_s">Tips：青龙Tools需要<span style="font-size: 16px; color: #E53333">环境变量</span>模块的权限，请开通此模块权限</p>
-                <p class="text_s">Tips：青龙Tools基于<span style="font-size: 16px; color: #E53333">青龙V2.12.X</span>版本开发，使用前推荐更新到开发相同的版本</p>
+                <p class="text_s">Tips：青龙Tools基于<span style="font-size: 16px; color: #E53333">青龙V2.12.X</span>版本开发，使用前推荐更新到开发相同或相邻的版本</p>
             </div>
         </div>
         <!--        面板管理-->

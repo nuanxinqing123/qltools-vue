@@ -20,6 +20,8 @@
             <div class="mdui-card-content mdui-typo">
                 <p class="text_s">新建模式：为每个上传的变量创建一个新的表来储存</p>
                 <p class="text_s">合并模式：将所有上传的变量放在同一个表中来储存, 可以通过自定义符号来分割变量【此模式用户提交备注将自动无效】</p>
+                <p class="text_s">更新模式：通过正则来匹配变量字段。匹配成功则更新旧表，否则自动新建表来储存</p>
+                <p class="text_s">绑定插件：管理员通过上传JavaScript插件绑定变量来再次确认变量数据是否符合要求，是否允许上传</p>
             </div>
             <div class="mdui-card-menu">
                 <button @click="OpenDialog()" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-grey mdui-text-color-white">
