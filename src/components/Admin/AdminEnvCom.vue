@@ -480,8 +480,10 @@ export default {
         GetJsAll(){
             axios.get("/v2/api/javascript/readall").then((res) => {
                 this.JsAll = res.data.data
-                for (let i = 0; i < this.JsAll.length; i++) {
-                    this.JsAll[i].selected = i === 0;
+                if (this.JsAll !== null) {
+                    for (let i = 0; i < this.JsAll.length; i++) {
+                        this.JsAll[i].selected = i === 0;
+                    }
                 }
             }).catch((error) => {
                 // 请求失败
