@@ -109,7 +109,9 @@
                     </div>
                     <div id="add_plugin" class="mdui-textfield" style="display: none">
                         绑定插件：
-                        <select class="mdui-select" @change="changInPlugin($event)" id="in_plugin_select"></select>
+                        <select class="mdui-select" @change="changInPlugin($event)" id="in_plugin_select">
+                            <option v-for="d in JsAll" :key="d" :value="d['FileIDName']" :selected="d.selected">{{d['FileIDName']}}</option>
+                        </select>
                     </div>
                     <div class="mdui-dialog-actions">
                         <button class="mdui-btn mdui-color-green-700 mdui-text-color-white btn">
@@ -185,7 +187,9 @@
                     </div>
                     <div id="up_plugin" class="mdui-textfield" style="display: none">
                         绑定插件：
-                        <select class="mdui-select" @change="changeUpPlugin($event)" id="up_plugin_select"></select>
+                        <select class="mdui-select" @change="changeUpPlugin($event)" id="up_plugin_select">
+                            <option v-for="d in JsAll" :key="d" :value="d['FileIDName']" :selected="d.selected">{{d['FileIDName']}}</option>
+                        </select>
                     </div>
                     <div class="mdui-dialog-actions">
                         <button class="mdui-btn mdui-color-green-700 mdui-text-color-white btn">
@@ -243,7 +247,8 @@ export default {
             },
             JsAll: [{
                 FileName: "",
-                FileIDName: ""
+                FileIDName: "",
+                selected: false
             }]
         }
     },
@@ -305,10 +310,12 @@ export default {
             // 是否显示开启插件
             if (this.EnvUpdate.envIsPlugin === true) {
                 document.getElementById("up_plugin").style.display = "inline"
+                for (let i = 0; i < this.JsAll.length; i++) {
+                    this.JsAll[i].selected = this.EnvUpdate.envPluginName === this.JsAll[i].FileName;
+                }
             } else {
                 document.getElementById("up_plugin").style.display = "none"
             }
-
             let inst = new mdui.Dialog('#envUpdate');
             inst.toggle()
         },
@@ -471,20 +478,9 @@ export default {
         GetJsAll(){
             axios.get("/v2/api/javascript/readall").then((res) => {
                 this.JsAll = res.data.data
-
-                // 初始化绑定插件列表
-                let in_plugin_select = new mdui.Select('#in_plugin_select');
-                let up_plugin_select = new mdui.Select('#up_plugin_select');
-                let list = ""
                 for (let i = 0; i < this.JsAll.length; i++) {
-                    list = list + "<option>" + this.JsAll[i].FileIDName + '</option>'
+                    this.JsAll[i].selected = i === 0;
                 }
-
-                // 初始化插件列表
-                document.getElementById("up_plugin_select").innerHTML = list
-                document.getElementById("in_plugin_select").innerHTML = list
-                in_plugin_select.handleUpdate();
-                up_plugin_select.handleUpdate();
             }).catch((error) => {
                 // 请求失败
                 mdui.snackbar({
