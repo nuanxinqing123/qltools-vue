@@ -309,7 +309,6 @@ export default {
                     case res.data.code === 2000:
                         // 获取下载地址
                         axios.post("/v2/api/container/backup/data").then((res) => {
-                            console.log(res.data)
                             fileDownload(JSON.stringify(res.data), 'backup.json')
                         }).catch((err) => {
                             mdui.snackbar({

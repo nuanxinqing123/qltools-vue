@@ -9,6 +9,8 @@
             <div class="mdui-card-content mdui-typo">
                 <p class="text_s">插件是通过JavaScript的形式向变量模块附加鉴定的一个用户自主化控制的扩展部分</p>
                 <p class="text_s">插件管理允许管理员自行上传&删除插件</p>
+                <p class="text_s">官方插件集合库：<a href="https://plugin.6b7.org/">https://plugin.6b7.org/</a></p>
+                <p class="text_s">官方插件集合库收集插件并非完全，管理员可自行寻找其他第三方集合库</p>
             </div>
         </div>
 <!--        插件列表-->

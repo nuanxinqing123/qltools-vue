@@ -7,7 +7,7 @@
                     <p>简单便捷的第三方工具，给您带来不一样的体验！</p>
                 </div>
                 <div class="mdui-col mdui-text">
-                    <p>邮件联系: <a href="mailto:nuanxinqing@gmail.com"><st>nuanxinqing@gmail.com</st></a></p>
+                    <p>QQ交流: <a href="https://jq.qq.com/?_wv=1027&k=BV2RgQaP"><st>国家反诈APP宣传</st></a></p>
                     <p>电报联系: <a href="https://t.me/Nuanxinqing"><st>@Nuanxinqing</st></a></p>
                 </div>
                 <div class="mdui-col mdui-text">
