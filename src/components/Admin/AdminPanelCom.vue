@@ -26,40 +26,43 @@
             <div class="mdui-table-fluid">
                 <table class="mdui-table mdui-table-hoverable">
                     <thead>
-                    <tr>
-                        <th>面板名称</th>
-                        <th>面板地址</th>
-                        <th>面板ID</th>
-                        <th>面板Secret</th>
-                        <th>绑定变量</th>
-                        <th>操作</th>
-                    </tr>
+                        <tr>
+                            <th>启用面板</th>
+                            <th>面板名称</th>
+                            <th>面板地址</th>
+                            <th>面板ID</th>
+                            <th>面板Secret</th>
+                            <th>绑定变量</th>
+                            <th>操作</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(d, index) in AllPanelData" :key="d">
-                        <th>{{d.name}}</th>
-                        <th>{{d.url}}</th>
-                        <th>{{d.id}}</th>
-                        <th>{{d.secret}}</th>
-                        <th>
-                            <button @click="OpenPanelEnv(d.ID, index)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-teal mdui-text-color-white">
-                                绑定变量
-                            </button>
-                        </th>
-                        <th>
-                            <button @click="CheckPanelSuccess(d.url, d.id, d.secret)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
-                                测试连接
-                            </button>
-                            &ensp;&ensp;
-                            <button @click="OpenPanelUpdate(d.ID, d.name, d.url, d.id, d.secret)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue mdui-text-color-white">
-                                修改
-                            </button>
-                            &ensp;&ensp;
-                            <button @click="OpenPanelDel(d.ID)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-red mdui-text-color-white">
-                                删除
-                            </button>
-                        </th>
-                    </tr>
+                        <tr v-for="(d, index) in AllPanelData" :key="d">
+                            <th v-if="d.enablePanel === true" style="color: green">启用</th>
+                            <th v-else style="color: #5353f5">停用</th>
+                            <th>{{d.name}}</th>
+                            <th>{{d.url}}</th>
+                            <th>{{d.id}}</th>
+                            <th>{{d.secret}}</th>
+                            <th>
+                                <button @click="OpenPanelEnv(d.ID, index)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-teal mdui-text-color-white">
+                                    绑定变量
+                                </button>
+                            </th>
+                            <th>
+                                <button @click="CheckPanelSuccess(d.url, d.id, d.secret)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
+                                    测试连接
+                                </button>
+                                &ensp;&ensp;
+                                <button @click="OpenPanelUpdate(d.ID, d.name, d.url, d.id, d.secret, d.enablePanel)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue mdui-text-color-white">
+                                    修改
+                                </button>
+                                &ensp;&ensp;
+                                <button @click="OpenPanelDel(d.ID)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-red mdui-text-color-white">
+                                    删除
+                                </button>
+                            </th>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -106,6 +109,15 @@
             <div class="mdui-dialog-title">修改面板信息</div>
             <div class="mdui-dialog-content mdui-typo" style="height: 407px;">
                 <form v-on:submit.prevent="UpdatePanel">
+                    <div class="mdui-textfield">
+                        <label class="mdui-textfield-label">面板状态</label>
+                        <label class="mdui-switch">
+                            停用面板&ensp;
+                            <input v-model="UpdatePanelData.enablePanel" type="checkbox"/>
+                            <i class="mdui-switch-icon"></i>
+                            &ensp;启用面板
+                        </label>
+                    </div>
                     <div class="mdui-textfield">
                         <label class="mdui-textfield-label">面板名称</label>
                         <input class="mdui-textfield-input" type="text" placeholder="选填" v-model="UpdatePanelData.name">
@@ -165,16 +177,18 @@ export default {
             AllPanelData: [{
                 ID: 0,
                 name: "",
+                enablePanel  : false,
                 url: "",
                 id: "",
                 secret: "",
-                envBinding: ""
+
             }],
             AddPanelData: {
                 name: "",
+                enablePanel: true,
                 url: "",
                 id: "",
-                secret: ""
+                secret: "",
             },
             DelPanelData: {
                 uid: 0
@@ -182,9 +196,10 @@ export default {
             UpdatePanelData: {
                 uid: 0,
                 name: "",
+                enablePanel: false,
                 url: "",
                 id: "",
-                secret: ""
+                secret: "",
             },
             EnvPanelData: [],
             EnvPanelDataID: 0,
@@ -224,12 +239,14 @@ export default {
             inst.toggle()
         },
         // 打开更新标签
-        OpenPanelUpdate(panelID, name, url, id, secret){
+        OpenPanelUpdate(panelID, name, url, id, secret, enable){
             this.UpdatePanelData.uid = panelID
             this.UpdatePanelData.name = name
             this.UpdatePanelData.url = url
             this.UpdatePanelData.id = id
             this.UpdatePanelData.secret = secret
+            this.UpdatePanelData.enablePanel = enable
+
             let inst = new mdui.Dialog('#panelUpdate');
             inst.toggle()
         },
@@ -436,7 +453,6 @@ export default {
             }
 
             // 发送修改
-            console.log({"uid": this.EnvPanelDataID, "envBinding": s_list})
             axios.put("/v2/api/env/panel/binding/update", {"uid": this.EnvPanelDataID, "envBinding": s_list}).then((res) => {
                 // 请求成功
                 switch (res.data !== "") {

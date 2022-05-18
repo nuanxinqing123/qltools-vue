@@ -30,7 +30,7 @@
                 <div id="submission-restrictions">
                     每个IP限制每天提交&ensp;
                     <input type="number" v-model="ipCount"/>
-                    &ensp;次 （默认空数据，不填写则模式没有上传次数限制）
+                    &ensp;次 （填写[0]则没有上传次数限制）
                 </div>
                 <!--       变量黑名单-->
                 <div class="mdui-card-primary" style="padding-top: 0; padding-bottom: 0">

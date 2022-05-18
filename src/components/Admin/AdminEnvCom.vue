@@ -8,7 +8,7 @@
             <div class="mdui-card-content mdui-typo">
                 <p class="text_s">变量管理并非管理容器内的变量，而是管理前端上传的允许变量名。可以搭配正则表达式过滤恶意提交，正则表达式为空则代表允许所有内容</p>
                 <p class="text_s">如果测试连接可以通过，但前台提交提示(发生一点小意外，请重新提交)。那么很可能是QLTools不兼容你的青龙版本，请更新青龙版本后再尝试</p>
-                <p class="text_s">某东的正则表达式（举例）：pt_key=.*?pt_pin=.*?; &ensp;&ensp;&ensp;&ensp;【更新模式正则：pt_pin=.*?】</p>
+                <p class="text_s">某东的正则表达式（举例）：pt_key=.*?;pt_pin=.*?; &ensp;&ensp;&ensp;&ensp;【更新模式正则：pt_pin=.*?;】</p>
                 <p class="text_s">某手极速版的正则（举例）：kuaishou.api_st=.*?;</p>
             </div>
         </div>
@@ -19,6 +19,7 @@
                 <div class="mdui-card-primary-subtitle">Set Env</div>
             </div>
             <div class="mdui-card-content mdui-typo">
+                <p class="text_s">变量备注：变量名的备注名称，如果填写则前台也将显示备注名称</p>
                 <p class="text_s">新建模式：为每个上传的变量创建一个新的表来储存</p>
                 <p class="text_s">合并模式：将所有上传的变量放在同一个表中来储存, 可以通过自定义符号来分割变量【此模式用户提交备注将自动无效】</p>
                 <p class="text_s">更新模式：通过正则来匹配变量字段。匹配成功则更新旧表，否则自动新建表来储存</p>
@@ -34,6 +35,7 @@
                     <thead>
                         <tr>
                             <th>变量名</th>
+                            <th>变量备注</th>
                             <th>变量限额</th>
                             <th>变量匹配正则</th>
                             <th>上传模式</th>
@@ -47,6 +49,7 @@
                     <tbody>
                         <tr v-for="d in EnvAll" :key="d">
                             <th>{{d.Name}}</th>
+                            <th>{{d.NameRemarks}}</th>
                             <th>{{d.Quantity}}</th>
                             <th>{{d.Regex}}</th>
                             <th v-if="d.Mode === 1">新建模式</th>
@@ -57,7 +60,7 @@
                             <th>{{d.IsPlugin}}</th>
                             <th>{{d.PluginName}}</th>
                             <th>
-                                <button @click="OpenEnvUpdate(d.ID, d.Name, d.Quantity, d.Regex, d.Mode, d.Division, d.ReUpdate, d.IsPlugin, d.PluginName)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue mdui-text-color-white">
+                                <button @click="OpenEnvUpdate(d.ID, d.Name, d.NameRemarks, d.Quantity, d.Regex, d.Mode, d.Division, d.ReUpdate, d.IsPlugin, d.PluginName)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue mdui-text-color-white">
                                     修改
                                 </button>
                                 &ensp;&ensp;
@@ -78,6 +81,10 @@
                     <div class="mdui-textfield">
                         <label class="mdui-textfield-label">变量名</label>
                         <input class="mdui-textfield-input" type="text" id="envName" placeholder="必填" v-model="AddEnvName.envName">
+                    </div>
+                    <div class="mdui-textfield">
+                        <label class="mdui-textfield-label">变量备注</label>
+                        <input class="mdui-textfield-input" type="text" id="envName" placeholder="选填" v-model="AddEnvName.envNameRemarks">
                     </div>
                     <div class="mdui-textfield">
                         <label class="mdui-textfield-label">变量限额</label>
@@ -140,6 +147,10 @@
                     <div class="mdui-textfield">
                         <label class="mdui-textfield-label">变量名</label>
                         <input class="mdui-textfield-input" type="text" placeholder="必填" v-model="EnvUpdate.envName">
+                    </div>
+                    <div class="mdui-textfield">
+                        <label class="mdui-textfield-label">变量备注</label>
+                        <input class="mdui-textfield-input" type="text" placeholder="选填" v-model="EnvUpdate.envNameRemarks">
                     </div>
                     <div class="mdui-textfield">
                         <label class="mdui-textfield-label">变量限额</label>
@@ -215,6 +226,7 @@ export default {
         return {
             AddEnvName: {
                 envName: "",
+                envNameRemarks: "",
                 envQuantity: 0,
                 envRegex: "",
                 envMode: 1,
@@ -226,6 +238,7 @@ export default {
             EnvAll: [{
                 ID: 0,
                 Name: "",
+                NameRemarks: "",
                 Quantity: 0,
                 Regex: "",
                 Mode: 1,
@@ -240,6 +253,7 @@ export default {
             EnvUpdate: {
                 envID: 0,
                 envName: "",
+                envNameRemarks: "",
                 envQuantity: 0,
                 envRegex: "",
                 envMode: 1,
@@ -286,9 +300,10 @@ export default {
             inst.toggle()
         },
         // 打开修改
-        OpenEnvUpdate(id, name, quantity, regex, mode, division, ReUpdate, IsPlugin, PluginName){
+        OpenEnvUpdate(id, name, NameRemarks, quantity, regex, mode, division, ReUpdate, IsPlugin, PluginName){
             this.EnvUpdate.envID = id
             this.EnvUpdate.envName = name
+            this.EnvUpdate.envNameRemarks = NameRemarks
             this.EnvUpdate.envQuantity = quantity
             this.EnvUpdate.envRegex = regex
             this.EnvUpdate.envMode = mode

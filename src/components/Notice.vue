@@ -36,7 +36,10 @@
             <div style="margin-top: 8px">
                 变量组：
                 <select class="mdui-select" @change="changeNum($event)"  id="env">
-                    <option v-for="d in this.EnvData" :key="d" :value="d['name']" :selected="d.selected">{{d['name']}}</option>
+                    <option v-for="d in this.EnvData" :key="d" :value="d['name']" :selected="d.selected">
+                        <span v-if="d['nameRemarks'] !== ''">{{d['nameRemarks']}}</span>
+                        <span v-else>{{d['name']}}</span>
+                    </option>
                 </select>
             </div>
                 <div style="margin-top: 8px; font-size: 16px">
@@ -146,9 +149,9 @@ export default {
               document.getElementById("dialog-content").innerText = "您已提交成功"
               inst.toggle()
 
-              // setTimeout(() => {
-              //     location.reload()
-              // }, 3000)
+              setTimeout(() => {
+                  location.reload()
+              }, 1500)
               break
             case res.data.code === 5020:
               // 限额已满，禁止提交
