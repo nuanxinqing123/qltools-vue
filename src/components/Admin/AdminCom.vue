@@ -14,6 +14,7 @@
             <div class="mdui-card-content mdui-typo">
                 <p class="text">欢迎回来, <st>{{AdminInfo}}</st></p>
                 <p class="text_s">Tip: 遇到问题可以前往<a href="https://github.com/nuanxinqing123/QLTools">Github</a>反馈问题哦</p>
+                <p class="text_s">在线更新（仅支持Linux）: 为了适配Docker，仅提供三种版本的在线更新。如何选择？ x86 架构选amd64，arm 架构选 arm64，其他设备选arm-7</p>
             </div>
             <div class="mdui-float-right" style="margin-right: 15px; margin-top: 15px; margin-bottom: 15px">
                 <button @click="GetUpdate" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
@@ -80,11 +81,23 @@
             <div class="mdui-dialog-content mdui-typo" style="height: 407px;">
                 <div id="Notice"></div>
                 <div class="mdui-dialog-actions">
-                    <a id="github" href="https://github.com/nuanxinqing123/QLTools/releases">
-                        <button class="mdui-btn mdui-color-green-700 mdui-text-color-white btn">
-                            更新版本
-                        </button>
-                    </a>
+                    <span id="github">
+                        处理器架构：
+                        <select class="mdui-select" @change="ChangeUpdateARM($event)" id="cpu_select">
+                            <option>amd64</option>
+                            <option>arm64</option>
+                            <option>arm-7</option>
+                        </select>&ensp;
+                        <button @click="SendUpdateSW" class="mdui-btn mdui-color-indigo mdui-text-color-white btn">
+                            在线更新
+                        </button>&ensp;
+                        <a href="https://github.com/nuanxinqing123/QLTools/releases">
+                            <button class="mdui-btn mdui-color-green-700 mdui-text-color-white btn">
+                                前往仓库
+                            </button>
+                        </a>
+                    </span>
+
                     <button class="mdui-btn mdui-color-blue-700 mdui-text-color-white btn" mdui-dialog-close>
                         关闭通知
                     </button>
@@ -119,6 +132,9 @@ export default {
                 Version: "",
                 Notice: ""
             },
+            UpdateARM: {
+                framework: "amd64"
+            }
         }
     },
     methods: {
@@ -261,6 +277,43 @@ export default {
                                 position: 'right-top',
                             });
                         }
+                        break
+                }
+            }).catch((error) => {
+                // 请求失败
+                mdui.snackbar({
+                    message: error,
+                    position: 'right-top',
+                });
+            })
+        },
+        // 修改架构版本
+        ChangeUpdateARM(e){
+            let iidd = e.target.selectedIndex
+            if (iidd === 0){
+                this.UpdateARM.framework = "amd64"
+            } else if (iidd === 1){
+                this.UpdateARM.framework = "arm64"
+            } else {
+                this.UpdateARM.framework = "arm-7"
+            }
+        },
+        // 发送更新请求
+        SendUpdateSW(){
+            axios.post("/v2/api/check/update/software", this.UpdateARM).then((res) => {
+                // 请求成功
+                switch (res.data !== "") {
+                    case res.data.code === 2000:
+                        mdui.snackbar({
+                            message: "程序已进入自动更新任务，请在五分钟后手动重启。如果更新失败请手动更新或查看日志排查错误原因",
+                            position: 'right-top',
+                        });
+                        break
+                    case res.data.code === 5030:
+                        mdui.snackbar({
+                            message: res.data.msg,
+                            position: 'right-top',
+                        });
                         break
                 }
             }).catch((error) => {
