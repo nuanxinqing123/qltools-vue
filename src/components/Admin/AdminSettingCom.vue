@@ -16,7 +16,7 @@
             <div>
                 <!--       网站背景图-->
                 <div class="mdui-card-primary" style="padding-top: 0; padding-bottom: 0">
-                    <div class="mdui-card-content" style="padding-bottom: 0">网站背景图</div>
+                    <div class="mdui-card-content mdui-text-color-indigo" style="padding-bottom: 0">网站背景图</div>
                 </div>
                 <div id="background-image">
                     <div class="mdui-textfield">
@@ -24,17 +24,28 @@
                         <div class="mdui-textfield-helper">此设置会更改前后台的背景图, 支持图床和直接返回图片的API接口</div>
                     </div>
                 </div>
+                <!--       IP提交限制-->
                 <div class="mdui-card-primary" style="padding-top: 0; padding-bottom: 0">
-                    <div class="mdui-card-content">提交限制</div>
+                    <div class="mdui-card-content mdui-text-color-indigo">提交限制</div>
                 </div>
                 <div id="submission-restrictions">
                     每个IP限制每天提交&ensp;
                     <input type="number" v-model="ipCount"/>
                     &ensp;次 （填写[0]则没有上传次数限制）
                 </div>
+                <!--       在线更新代理-->
+                <div class="mdui-card-primary" style="padding-top: 0; padding-bottom: 0">
+                    <div class="mdui-card-content mdui-text-color-indigo">在线更新代理</div>
+                </div>
+                <div style="margin-right: 32px;margin-left: 32px;">
+                    <div class="mdui-textfield">
+                        <input class="mdui-textfield-input" type="text" placeholder="Github代理地址" v-model="ghProxy"/>
+                        <div class="mdui-textfield-helper">此设置推荐在中国大陆地区的服务器部署时填写</div>
+                    </div>
+                </div>
                 <!--       变量黑名单-->
                 <div class="mdui-card-primary" style="padding-top: 0; padding-bottom: 0">
-                    <div class="mdui-card-content" style="padding-bottom: 0">变量黑名单【请使用<span style="color: red;"> @ </span>符号分隔】</div>
+                    <div class="mdui-card-content mdui-text-color-indigo" style="padding-bottom: 0">变量黑名单【请使用<span style="color: red;"> @ </span>符号分隔】</div>
                 </div>
                 <div id="textfield">
                     <div class="mdui-textfield">
@@ -44,7 +55,7 @@
                 </div>
                 <!--            公告-->
                 <div class="mdui-card-primary" style="padding-top: 0; padding-bottom: 0">
-                    <div class="mdui-card-content">设置公告</div>
+                    <div class="mdui-card-content mdui-text-color-indigo">设置公告</div>
                 </div>
                 <div id="notice">
                     <div style="border: 1px solid #ccc">
@@ -92,6 +103,7 @@ export default {
             blacklist: "",
             backgroundImage: "",
             ipCount: 0,
+            ghProxy: ""
         }
     },
     setup() {
@@ -126,7 +138,8 @@ export default {
                 {key: "notice", value: this.valueHtml},
                 {key: "blacklist", value: this.blacklist},
                 {key: "backgroundImage", value: this.backgroundImage},
-                {key: "ipCount", value: this.ipCount.toString()}
+                {key: "ipCount", value: this.ipCount.toString()},
+                {key: "ghProxy", value: this.ghProxy}
             ]
             axios.put("/v2/api/set/settings", this.SendSettings).then((res) => {
                 // 请求成功
@@ -168,12 +181,15 @@ export default {
                         if (res.data.data[3] !== undefined){
                             this.ipCount = parseInt(res.data.data[3].value)
                         }
+                        if (res.data.data[4] !== undefined){
+                            this.ghProxy = res.data.data[4].value
+                        }
                 }
             }).catch((error) => {
                 // 请求失败
                 console.log(error)
                 mdui.snackbar({
-                    message: "获取网站配置,快点添加一些配置吧",
+                    message: "获取网站配置失败,快点添加一些配置吧",
                     position: 'right-top',
                 });
             })
@@ -201,5 +217,8 @@ export default {
 #submission-restrictions {
     margin-right: 32px;
     margin-left: 32px;
+}
+.mdui-card-content{
+    line-height: 10px;
 }
 </style>
