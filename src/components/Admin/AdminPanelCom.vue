@@ -254,11 +254,11 @@ export default {
         OpenPanelEnv(panelID, index){
             this.EnvPanelDataID = panelID
             this.GetEnvAll()
-            this.EnvPanelData = this.AllPanelData[index].envBinding.split("")
+            this.EnvPanelData = this.AllPanelData[index].envBinding.split("@")
             let inst = new mdui.Dialog('#panelEnv');
             inst.toggle()
         },
-        // 添加面板
+        // 添加面板@
         AddPanel(){
             axios.post("/v2/api/env/panel/add", this.AddPanelData).then((res) => {
                 // 请求成功
@@ -434,22 +434,13 @@ export default {
         // 发送修改
         SendPanelBinding(){
             // 数据转换int
-            let new_list = []
-            let t_list = []
             let s_list = []
+
             for (let i = 0; i < this.EnvPanelData.length; i++) {
-                new_list.push(parseInt(this.EnvPanelData[i]))
-            }
-            // 排序
-            new_list.sort()
-            for (let i = 0; i < new_list.length; i++) {
-                if (!isNaN(new_list[i])) {
-                    t_list.push(new_list[i])
+                if (!isNaN(this.EnvPanelData[i])) {
+                    // 数据转换String
+                    s_list.push(this.EnvPanelData[i].toString())
                 }
-            }
-            // 数据转换String
-            for (let i = 0; i < t_list.length; i++) {
-                s_list.push(t_list[i].toString())
             }
 
             // 发送修改
