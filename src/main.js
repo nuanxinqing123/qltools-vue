@@ -10,7 +10,7 @@ import 'highlight.js/lib/common'
 import hljsVuePlugin from '@highlightjs/vue-plugin'
 // highlight
 
-axios.defaults.timeout = 5000       // 超时时长
+axios.defaults.timeout = 10000       // 超时时长
 axios.defaults.headers.common['Authorization'] = "Bearer" + " " + localStorage.getItem("Bearer");
 process.env.NODE_ENV === 'production' ? axios.defaults.baseURL = "/" : axios.defaults.baseURL = "/url"
 
