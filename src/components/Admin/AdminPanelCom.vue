@@ -22,6 +22,9 @@
                 <button @click="OpenPanelAdd()" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-grey mdui-text-color-white">
                     <i class="mdui-icon mdui-icon-left material-icons">loupe</i>新增
                 </button>
+                <button @click="OpenPutPanelEnv()" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-grey mdui-text-color-white">
+                    <i class="mdui-icon mdui-icon-left material-icons">delete</i>清空变量绑定
+                </button>
             </div>
             <div class="mdui-table-fluid">
                 <table class="mdui-table mdui-table-hoverable">
@@ -38,23 +41,23 @@
                     </thead>
                     <tbody>
                         <tr v-for="(d, index) in AllPanelData" :key="d">
-                            <th v-if="d.enablePanel === true" style="color: green">启用</th>
+                            <th v-if="d.Enable === true" style="color: green">启用</th>
                             <th v-else style="color: #5353f5">停用</th>
-                            <th>{{d.name}}</th>
-                            <th>{{d.url}}</th>
-                            <th>{{d.id}}</th>
-                            <th>{{d.secret}}</th>
+                            <th>{{d.PanelName}}</th>
+                            <th>{{d.URL}}</th>
+                            <th>{{d.ClientID}}</th>
+                            <th>{{d.ClientSecret}}</th>
                             <th>
                                 <button @click="OpenPanelEnv(d.ID, index)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-teal mdui-text-color-white">
                                     绑定变量
                                 </button>
                             </th>
                             <th>
-                                <button @click="CheckPanelSuccess(d.url, d.id, d.secret)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
+                                <button @click="CheckPanelSuccess(d.URL, d.ClientID, d.ClientSecret)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
                                     测试连接
                                 </button>
                                 &ensp;&ensp;
-                                <button @click="OpenPanelUpdate(d.ID, d.name, d.url, d.id, d.secret, d.enablePanel)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue mdui-text-color-white">
+                                <button @click="OpenPanelUpdate(d.ID, d.PanelName, d.URL, d.ClientID, d.ClientSecret, d.Enable)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue mdui-text-color-white">
                                     修改
                                 </button>
                                 &ensp;&ensp;
@@ -163,6 +166,15 @@
                 </form>
             </div>
         </div>
+        <!--        清空面板变量绑定-->
+        <div id="panelEnvDel" class="mdui-dialog" style="display: none;">
+            <div class="mdui-dialog-title">确认清空绑定?</div>
+            <div class="mdui-dialog-content">此功能会清除所有面板的绑定变量(正式版1.4以及之前的版本用户请执行此操作)</div>
+            <div class="mdui-dialog-actions">
+                <button class="mdui-btn mdui-ripple" mdui-dialog-close>返回</button>
+                <button @click="DelPanelBingEnv()" class="mdui-btn mdui-ripple">执行</button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -176,11 +188,12 @@ export default {
         return {
             AllPanelData: [{
                 ID: 0,
-                name: "",
-                enablePanel  : false,
-                url: "",
-                id: "",
-                secret: "",
+                PanelName: "",
+                Enable  : false,
+                URL: "",
+                ClientID: "",
+                ClientSecret: "",
+                EnvBinding: ""
 
             }],
             AddPanelData: {
@@ -232,6 +245,11 @@ export default {
             let inst = new mdui.Dialog('#panelAdd');
             inst.toggle()
         },
+        // 打开清空绑定变量标签
+        OpenPutPanelEnv(){
+            let inst = new mdui.Dialog('#panelEnvDel');
+            inst.toggle()
+        },
         // 打开删除标签
         OpenPanelDel(panelID){
             this.DelPanelData.uid = panelID
@@ -254,7 +272,7 @@ export default {
         OpenPanelEnv(panelID, index){
             this.EnvPanelDataID = panelID
             this.GetEnvAll()
-            this.EnvPanelData = this.AllPanelData[index].envBinding.split("@")
+            this.EnvPanelData = this.AllPanelData[index].EnvBinding.split("@")
             let inst = new mdui.Dialog('#panelEnv');
             inst.toggle()
         },
@@ -311,6 +329,29 @@ export default {
                     case res.data.code === 2000:
                         mdui.snackbar({
                             message: '面板删除成功',
+                            position: 'right-top',
+                        });
+                        setTimeout(() => {
+                            location.reload()
+                        }, 1000)
+                        break
+                }
+            }).catch((error) => {
+                // 请求失败
+                mdui.snackbar({
+                    message: error,
+                    position: 'right-top',
+                });
+            })
+        },
+        // 清空变量绑定
+        DelPanelBingEnv(){
+            axios.put("/v2/api/env/panel/unbind/update").then((res) => {
+                // 请求成功
+                switch (res.data !== "") {
+                    case res.data.code === 2000:
+                        mdui.snackbar({
+                            message: '解绑成功',
                             position: 'right-top',
                         });
                         setTimeout(() => {
