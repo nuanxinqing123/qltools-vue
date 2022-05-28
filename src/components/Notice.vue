@@ -50,7 +50,7 @@
         <div class="envInput">
             <form v-on:submit.prevent="POSTEnvAdd">
                 <div class="mdui-textfield">
-                  <input type="text" class="mdui-textfield-input" placeholder="Cookie"
+                  <input type="text" class="mdui-textfield-input" placeholder="变量值"
                     v-model="EnvAdd.envData" />
                 </div>
                 <div class="mdui-textfield">
