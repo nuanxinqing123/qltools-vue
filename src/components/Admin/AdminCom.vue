@@ -305,7 +305,7 @@ export default {
                 switch (res.data !== "") {
                     case res.data.code === 2000:
                         mdui.snackbar({
-                            message: "程序已进入自动更新任务，请在五分钟后手动重启。如果更新失败请手动更新或查看日志排查错误原因",
+                            message: "程序已进入自动更新任务，请在5-10分钟后手动重启。如果更新失败请手动更新或查看日志排查错误原因",
                             position: 'right-top',
                         });
                         break
