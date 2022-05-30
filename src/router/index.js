@@ -91,6 +91,15 @@ const routes = [
       title: '网站设置'
     },
     component: () => import('../views/Admin/AdminSettingsView'),
+  },
+  {
+    path: '/admin/about',
+    name: 'adminAbout',
+    meta: {
+      requireAuth: true,
+      title: '关于面板'
+    },
+    component: () => import('../views/Admin/AdminAboutView'),
   }
 ]
 

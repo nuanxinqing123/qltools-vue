@@ -29,6 +29,10 @@
                 <i class="mdui-list-item-icon mdui-icon material-icons">settings</i>
                 <div class="mdui-list-item-content">网站设置</div>
             </a>
+            <a @click="this.OpenURL('/#/admin/about/')" class="mdui-list-item">
+                <i class="mdui-list-item-icon mdui-icon material-icons">attach_money</i>
+                <div class="mdui-list-item-content">关于面板</div>
+            </a>
             <a class="mdui-list-item" mdui-drawer-close="">
                 <i class="mdui-list-item-icon mdui-icon material-icons">chevron_left</i>
                 <div class="mdui-list-item-content">收起菜单</div>
