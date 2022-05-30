@@ -26,14 +26,14 @@
                     A面板：
                     <select class="mdui-select"  @change="UpdateServerID('A', $event)" id="server1">
                         <option>请选择面板</option>
-                        <option v-for="d in AllPanelData" :key="d" :value="d['name']">{{d['name']}}</option>
+                        <option v-for="d in AllPanelData" :key="d" :value="d['PanelName']">{{d['PanelName']}}</option>
                     </select>
                 </span>
                 <span style="margin-left: 20px; margin-right: 20px">
                     B面板：
                     <select class="mdui-select"  @change="UpdateServerID('B', $event)" id="server2">
                         <option>请选择面板</option>
-                        <option v-for="d in AllPanelData" :key="d" :value="d['name']">{{d['name']}}</option>
+                        <option v-for="d in AllPanelData" :key="d" :value="d['PanelName']">{{d['PanelName']}}</option>
                     </select>
                 </span>
 
@@ -68,7 +68,7 @@
                     操作面板：
                    <select class="mdui-select" @change="UpdateBRServerID($event)" id="server3">
                        <option>请选择面板</option>
-                        <option v-for="d in AllPanelData" :key="d" :value="d['name']">{{d['name']}}</option>
+                        <option v-for="d in AllPanelData" :key="d" :value="d['PanelName']">{{d['PanelName']}}</option>
                    </select>
                 </span>
             </div>
@@ -146,7 +146,7 @@ export default {
         return {
             AllPanelData: [{
                 ID: 0,
-                name: "",
+                PanelName: "",
                 url: "",
                 id: "",
                 secret: "",
