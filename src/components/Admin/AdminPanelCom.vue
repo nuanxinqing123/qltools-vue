@@ -8,8 +8,7 @@
             <div class="mdui-card-content mdui-typo">
                 <p class="text_s">面板管理可以添加自己的服务容器（青龙面板），用于分散提交的变量到不同的容器来缓解过于集中的压力。利于管理</p>
                 <p class="text_s">Tips：青龙Tools需要<span style="font-size: 16px; color: #E53333">环境变量</span>模块的权限，请开通此模块权限</p>
-                <p class="text_s">Tips：青龙Tools基于<span style="font-size: 16px; color: #E53333">青龙V2.12.X</span>版本开发，使用前推荐更新到开发相同或相邻的版本</p>
-                <p class="text_s">Tips：已知兼容版本：<span style="font-size: 16px; color: #E53333">v2.11.x - v2.12.x</span></p>
+                <p class="text_s">Tips：青龙面板版本低于2.11.x的用户请选择旧版本，2.11.x以及以上用户请选择新版本。默认新版本</p>
             </div>
         </div>
         <!--        面板管理-->
@@ -32,6 +31,7 @@
                         <tr>
                             <th>启用面板</th>
                             <th>面板名称</th>
+                            <th>面板版本</th>
                             <th>面板地址</th>
                             <th>面板ID</th>
                             <th>面板Secret</th>
@@ -44,6 +44,8 @@
                             <th v-if="d.Enable === true" style="color: green">启用</th>
                             <th v-else style="color: #5353f5">停用</th>
                             <th>{{d.PanelName}}</th>
+                            <th v-if="d.PanelVersion === true">旧版本</th>
+                            <th v-else >新版本</th>
                             <th>{{d.URL}}</th>
                             <th>{{d.ClientID}}</th>
                             <th>{{d.ClientSecret}}</th>
@@ -57,7 +59,7 @@
                                     测试连接
                                 </button>
                                 &ensp;&ensp;
-                                <button @click="OpenPanelUpdate(d.ID, d.PanelName, d.URL, d.ClientID, d.ClientSecret, d.Enable)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue mdui-text-color-white">
+                                <button @click="OpenPanelUpdate(d.ID, d.PanelName, d.URL, d.ClientID, d.ClientSecret, d.Enable, d.PanelVersion)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue mdui-text-color-white">
                                     修改
                                 </button>
                                 &ensp;&ensp;
@@ -78,6 +80,15 @@
                     <div class="mdui-textfield">
                         <label class="mdui-textfield-label">面板名称</label>
                         <input class="mdui-textfield-input" type="text" id="panelName" placeholder="选填" v-model="AddPanelData.name">
+                    </div>
+                    <div class="mdui-textfield">
+                        <label class="mdui-textfield-label">面板版本</label>
+                        <label class="mdui-switch">
+                            新版本&ensp;
+                            <input v-model="AddPanelData.PanelVersion" type="checkbox"/>
+                            <i class="mdui-switch-icon"></i>
+                            &ensp;旧版本
+                        </label>
                     </div>
                     <div class="mdui-textfield">
                         <label class="mdui-textfield-label">面板地址</label>
@@ -124,6 +135,15 @@
                     <div class="mdui-textfield">
                         <label class="mdui-textfield-label">面板名称</label>
                         <input class="mdui-textfield-input" type="text" placeholder="选填" v-model="UpdatePanelData.name">
+                    </div>
+                    <div class="mdui-textfield">
+                        <label class="mdui-textfield-label">面板版本</label>
+                        <label class="mdui-switch">
+                            新版本&ensp;
+                            <input v-model="UpdatePanelData.PanelVersion" type="checkbox"/>
+                            <i class="mdui-switch-icon"></i>
+                            &ensp;旧版本
+                        </label>
                     </div>
                     <div class="mdui-textfield">
                         <label class="mdui-textfield-label">面板地址</label>
@@ -193,12 +213,13 @@ export default {
                 URL: "",
                 ClientID: "",
                 ClientSecret: "",
-                EnvBinding: ""
-
+                EnvBinding: "",
+                PanelVersion: false
             }],
             AddPanelData: {
                 name: "",
                 enablePanel: true,
+                PanelVersion: false,
                 url: "",
                 id: "",
                 secret: "",
@@ -210,6 +231,7 @@ export default {
                 uid: 0,
                 name: "",
                 enablePanel: false,
+                PanelVersion: false,
                 url: "",
                 id: "",
                 secret: "",
@@ -257,13 +279,14 @@ export default {
             inst.toggle()
         },
         // 打开更新标签
-        OpenPanelUpdate(panelID, name, url, id, secret, enable){
+        OpenPanelUpdate(panelID, name, url, id, secret, enable, version){
             this.UpdatePanelData.uid = panelID
             this.UpdatePanelData.name = name
             this.UpdatePanelData.url = url
             this.UpdatePanelData.id = id
             this.UpdatePanelData.secret = secret
             this.UpdatePanelData.enablePanel = enable
+            this.UpdatePanelData.PanelVersion = version
 
             let inst = new mdui.Dialog('#panelUpdate');
             inst.toggle()
@@ -276,7 +299,7 @@ export default {
             let inst = new mdui.Dialog('#panelEnv');
             inst.toggle()
         },
-        // 添加面板@
+        // 添加面板
         AddPanel(){
             axios.post("/v2/api/env/panel/add", this.AddPanelData).then((res) => {
                 // 请求成功
