@@ -100,13 +100,29 @@ export default {
         GetIndexData() {
             axios.get("/v1/api/index/data").then((res) => {
                 this.InitIndexData = res.data.data
+
+                // 面板未绑定变量（管理员可见）
+                let token = localStorage.getItem('Bearer');
+                if (!(token === null || token === "")) {
+                    for (let i = 0; i < this.InitIndexData['serverData'].length; i++) {
+                        if (this.InitIndexData['serverData'][i]['envData'] === null){
+                            mdui.snackbar({
+                                message: "【管理员可见】面板存在未绑定变量，请在面板管理中绑定变量",
+                                position: 'right-top',
+                            });
+                        }
+                    }
+                }
+
                 this.EnvData = this.InitIndexData['serverData'][0]['envData']
                 this.EnvAdd.serverID = this.InitIndexData['serverData'][0]['ID']
-                this.EnvAdd.envName = this.InitIndexData['serverData'][0]['envData'][0]['name']
-                this.EnvData[0].selected = true;
-                document.getElementById("num").innerText = this.InitIndexData['serverData'][0]['envData'][0][
-                'quantity'
-                ]
+                if (this.InitIndexData['serverData'][0]['envData'] !== null){
+                    this.EnvAdd.envName = this.InitIndexData['serverData'][0]['envData'][0]['name'];
+                    this.EnvData[0].selected = true;
+                    document.getElementById("num").innerText = this.InitIndexData['serverData'][0]['envData'][0][
+                        'quantity'
+                        ]
+                }
             })
         },
         // 获取公告
@@ -174,7 +190,7 @@ export default {
             case res.data.code === 5016:
               // 发生一点小意外，请重新提交
               document.getElementById("dialog-title").innerText = "Error"
-              document.getElementById("dialog-content").innerText = "发生一点小意外，请重新提交"
+              document.getElementById("dialog-content").innerText = res.data.msg
               inst.toggle()
               break
             case res.data.code === 5024:
@@ -186,7 +202,7 @@ export default {
             case res.data.code === 5025:
               // 变量已被管理员禁止提交
               document.getElementById("dialog-title").innerText = "Error"
-              document.getElementById("dialog-content").innerText = "变量已被管理员禁止提交"
+              document.getElementById("dialog-content").innerText = "该变量已被管理员禁止提交"
               inst.toggle()
               break
             case res.data.code === 5026:

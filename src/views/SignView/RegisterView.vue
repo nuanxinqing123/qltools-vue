@@ -4,7 +4,7 @@
     <!--    注册组件-->
     <div id="box" >
         <div class="box" style="margin-top: 35px;">
-            <p style="padding-bottom: 10px">管理员注册（演示版）</p>
+            <p style="padding-bottom: 10px">管理员注册</p>
             <hr>
             <div style="width: 75%;margin: 20px auto 0;">
                 <form v-on:submit.prevent="submitForm">
