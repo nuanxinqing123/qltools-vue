@@ -9,12 +9,6 @@
         <a mdui-tooltip="{content: '刷新页面'}" href="javascript:location.reload();" class="mdui-btn mdui-btn-icon">
             <i class="mdui-icon material-icons">refresh</i>
         </a>
-        <a mdui-tooltip="{content: '登录'}" @click="this.Login()" id="Login" class="mdui-btn mdui-btn-icon" >
-            <i class="mdui-icon material-icons">center_focus_strong</i>
-        </a>
-        <a mdui-tooltip="{content: '注册'}" @click="this.Register()" id="Register" class="mdui-btn mdui-btn-icon">
-            <i class="mdui-icon material-icons">center_focus_weak</i>
-        </a>
         <a mdui-tooltip="{content: '管理面板'}" @click="this.GoAdmin()" id="Admin" class="mdui-btn mdui-btn-icon" style="display: none">
             <i class="mdui-icon material-icons">account_circle</i>
         </a>
@@ -40,8 +34,6 @@ export default {
                 axios.post("/v1/api/check/token", TokenData).then((res) => {
                     if (res.data.data === true) {
                         document.getElementById("Admin").style.display = "inline"
-                        document.getElementById("Login").style.display = "none"
-                        document.getElementById("Register").style.display = "none"
                         document.getElementById("LogOut").style.display = "inline"
                     } else {
                         // Token失效
@@ -59,14 +51,6 @@ export default {
         },
         GoAdmin(){
             window.open("/#/admin", "_self")
-            location.reload()
-        },
-        Register(){
-            window.open("/#/register", "_self")
-            location.reload()
-        },
-        Login(){
-            window.open("/#/login", "_self")
             location.reload()
         }
     },
