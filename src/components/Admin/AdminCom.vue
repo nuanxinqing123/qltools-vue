@@ -32,6 +32,10 @@
                         <input class="mdui-textfield-input" type="text" id="old_password" placeholder="必填" v-model="RePwdData.old_password">
                     </div>
                     <div class="mdui-textfield">
+                        <label class="mdui-textfield-label">修改管理员邮箱</label>
+                        <input class="mdui-textfield-input" type="text" id="email" placeholder="如果不修改请忽略（选填）" v-model="RePwdData.email">
+                    </div>
+                    <div class="mdui-textfield">
                         <label class="mdui-textfield-label">修改密码</label>
                         <input class="mdui-textfield-input" type="text" id="password" placeholder="必填" v-model="RePwdData.password">
                     </div>
@@ -117,6 +121,7 @@ export default {
         return {
             RePwdData :{
                 old_password: '',
+                email: "",
                 password: '',
                 re_password: ""
             },
