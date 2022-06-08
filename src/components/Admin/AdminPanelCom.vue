@@ -24,6 +24,9 @@
                 <button @click="OpenPutPanelEnv()" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-grey mdui-text-color-white">
                     <i class="mdui-icon mdui-icon-left material-icons">delete</i>清空变量绑定
                 </button>
+                <button @click="UpdateAllPanelToken()" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-grey mdui-text-color-white">
+                    <i class="mdui-icon mdui-icon-left material-icons">settings_backup_restore</i>更新Token
+                </button>
             </div>
             <div class="mdui-table-fluid">
                 <table class="mdui-table mdui-table-hoverable">
@@ -47,8 +50,8 @@
                             <th v-if="d.PanelVersion === true">旧版本</th>
                             <th v-else >新版本</th>
                             <th>{{d.URL}}</th>
-                            <th>{{d.ClientID}}</th>
-                            <th>{{d.ClientSecret}}</th>
+                            <th>******</th>
+                            <th>************</th>
                             <th>
                                 <button @click="OpenPanelEnv(d.ID, index)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-teal mdui-text-color-white">
                                     绑定变量
@@ -529,6 +532,26 @@ export default {
                 });
             })
         },
+        // 批量更新面板Token
+        UpdateAllPanelToken(){
+            axios.put("/v2/api/env/panel/token/update").then((res) => {
+                // 请求成功
+                switch (res.data !== "") {
+                    case res.data.code === 2000:
+                        mdui.snackbar({
+                            message: '批量更新面板Token成功',
+                            position: 'right-top',
+                        });
+                        break
+                }
+            }).catch((error) => {
+                // 请求失败
+                mdui.snackbar({
+                    message: error,
+                    position: 'right-top',
+                });
+            })
+        }
     },
     mounted() {
         this.GetAllPanelData()
