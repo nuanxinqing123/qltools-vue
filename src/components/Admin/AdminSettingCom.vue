@@ -14,9 +14,19 @@
                 <div class="mdui-card-primary-title">Settings</div>
             </div>
             <div>
+                <!--       网站标题-->
+                <div class="mdui-card-primary" style="padding-top: 0; padding-bottom: 0">
+                    <div class="mdui-card-content mdui-text-color-indigo" style="padding-bottom: 0">提交限制</div>
+                </div>
+                <div id="background-image">
+                    <div class="mdui-textfield">
+                        <input class="mdui-textfield-input" type="text" placeholder="网站标题" v-model="webTitle"/>
+                        <div class="mdui-textfield-helper">此设置会更改前台的网站标题</div>
+                    </div>
+                </div>
                 <!--       网站背景图-->
                 <div class="mdui-card-primary" style="padding-top: 0; padding-bottom: 0">
-                    <div class="mdui-card-content mdui-text-color-indigo" style="padding-bottom: 0">网站背景图</div>
+                    <div class="mdui-card-content mdui-text-color-indigo">网站背景图</div>
                 </div>
                 <div id="background-image">
                     <div class="mdui-textfield">
@@ -103,7 +113,8 @@ export default {
             blacklist: "",
             backgroundImage: "",
             ipCount: 0,
-            ghProxy: ""
+            ghProxy: "",
+            webTitle: ""
         }
     },
     setup() {
@@ -139,7 +150,8 @@ export default {
                 {key: "blacklist", value: this.blacklist},
                 {key: "backgroundImage", value: this.backgroundImage},
                 {key: "ipCount", value: this.ipCount.toString()},
-                {key: "ghProxy", value: this.ghProxy}
+                {key: "ghProxy", value: this.ghProxy},
+                {key: "webTitle", value: this.webTitle}
             ]
             axios.put("/v2/api/set/settings", this.SendSettings).then((res) => {
                 // 请求成功
@@ -183,6 +195,9 @@ export default {
                         }
                         if (res.data.data[4] !== undefined){
                             this.ghProxy = res.data.data[4].value
+                        }
+                        if (res.data.data[4] !== undefined){
+                            this.webTitle = res.data.data[5].value
                         }
                 }
             }).catch((error) => {

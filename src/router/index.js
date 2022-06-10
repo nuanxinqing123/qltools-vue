@@ -7,7 +7,7 @@ const routes = [
     name: 'Index',
     meta: {
       requireAuth: false,
-      title: '青龙Tools'
+      title: '首页'
     },
     component: () => import('../views/IndexView.vue'),
   },
