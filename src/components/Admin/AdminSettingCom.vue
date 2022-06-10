@@ -16,7 +16,7 @@
             <div>
                 <!--       网站标题-->
                 <div class="mdui-card-primary" style="padding-top: 0; padding-bottom: 0">
-                    <div class="mdui-card-content mdui-text-color-indigo" style="padding-bottom: 0">提交限制</div>
+                    <div class="mdui-card-content mdui-text-color-indigo" style="padding-bottom: 0">网站标题</div>
                 </div>
                 <div id="background-image">
                     <div class="mdui-textfield">

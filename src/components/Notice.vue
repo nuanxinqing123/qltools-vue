@@ -158,6 +158,7 @@ export default {
         let inst = new mdui.Dialog('#SendOK');
         axios.post("/v1/api/env/add", this.EnvAdd).then((res) => {
           // 请求成功
+          let token = localStorage.getItem('Bearer');
           switch (res.data !== "") {
             case res.data.code === 2000:
               // 上传成功
@@ -183,9 +184,15 @@ export default {
               break
             case res.data.code === 5015:
               // 提交服务器或变量名不在白名单
-              document.getElementById("dialog-title").innerText = "Error"
-              document.getElementById("dialog-content").innerText = "提交服务器或变量名不在白名单"
-              inst.toggle()
+              if (!(token === null || token === "")) {
+                  document.getElementById("dialog-title").innerText = "【管理员可见】Error"
+                  document.getElementById("dialog-content").innerText = "提交服务器或变量名不在白名单, 请尝试在后台点击清空变量绑定按钮后重新绑定解决"
+                  inst.toggle()
+              } else {
+                  document.getElementById("dialog-title").innerText = "Error"
+                  document.getElementById("dialog-content").innerText = "提交服务器或变量名不在白名单"
+                  inst.toggle()
+              }
               break
             case res.data.code === 5016:
               // 发生一点小意外，请重新提交
@@ -213,9 +220,15 @@ export default {
               break
             case res.data.code === 5028:
               // JS执行发生错误, 系统错误
-              document.getElementById("dialog-title").innerText = "Error"
-              document.getElementById("dialog-content").innerText = res.data.msg
-              inst.toggle()
+                if (!(token === null || token === "")) {
+                    document.getElementById("dialog-title").innerText = "【管理员可见】Error"
+                    document.getElementById("dialog-content").innerText = "当前变量绑定的JS插件执行发生错误发生错误，请查看日志解决错误（日志路径：logs目录下面）"
+                    inst.toggle()
+                } else {
+                    document.getElementById("dialog-title").innerText = "Error"
+                    document.getElementById("dialog-content").innerText = res.data.msg
+                    inst.toggle()
+                }
               break
             case res.data.code === 5029:
               // 提交数据已被管理员拒绝
@@ -225,9 +238,15 @@ export default {
               break
             case res.data.code === 5003:
               // 服务繁忙,请稍后重试
-              document.getElementById("dialog-title").innerText = "Error"
-              document.getElementById("dialog-content").innerText = "服务繁忙,请稍后重试"
-              inst.toggle()
+                if (!(token === null || token === "")) {
+                    document.getElementById("dialog-title").innerText = "【管理员可见】Error"
+                    document.getElementById("dialog-content").innerText = "程序内部发生错误，请查看日志解决错误（日志路径：logs目录下面）"
+                    inst.toggle()
+                } else {
+                    document.getElementById("dialog-title").innerText = "Error"
+                    document.getElementById("dialog-content").innerText = "服务繁忙,请稍后重试"
+                    inst.toggle()
+                }
               break
             case res.data.code === 5002:
               // 传递参数错误
