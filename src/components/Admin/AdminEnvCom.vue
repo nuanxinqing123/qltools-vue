@@ -7,7 +7,6 @@
             </div>
             <div class="mdui-card-content mdui-typo">
                 <p class="text_s">变量管理并非管理容器内的变量，而是管理前端上传的允许变量名。可以搭配正则表达式过滤恶意提交，正则表达式为空则代表允许所有内容</p>
-                <p class="text_s">如果测试连接可以通过，但前台提交提示(发生一点小意外，请重新提交)。那么很可能是QLTools不兼容你的青龙版本，请更新青龙版本后再尝试</p>
             </div>
             <div class="mdui-float-right" style="margin-right: 15px; margin-top: 15px; margin-bottom: 15px">
                 <button @click="OpenReList" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
