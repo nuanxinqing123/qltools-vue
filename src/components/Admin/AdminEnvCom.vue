@@ -36,6 +36,7 @@
                 <table class="mdui-table mdui-table-hoverable">
                     <thead>
                         <tr>
+                            <th>操作</th>
                             <th>变量名</th>
                             <th>变量备注</th>
                             <th>变量限额</th>
@@ -43,24 +44,13 @@
                             <th>上传模式</th>
                             <th>分割符(合并)</th>
                             <th>更新正则(更新)</th>
+                            <th>绑定CDK</th>
                             <th>启用插件</th>
                             <th>插件名称</th>
-                            <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="d in EnvAll" :key="d">
-                            <th>{{d.Name}}</th>
-                            <th>{{d.NameRemarks}}</th>
-                            <th>{{d.Quantity}}</th>
-                            <th>{{d.Regex}}</th>
-                            <th v-if="d.Mode === 1">新建模式</th>
-                            <th v-else-if="d.Mode === 2">合并模式</th>
-                            <th v-else>更新模式</th>
-                            <th>{{d.Division}}</th>
-                            <th>{{d.ReUpdate}}</th>
-                            <th>{{d.IsPlugin}}</th>
-                            <th>{{d.PluginName}}</th>
                             <th>
                                 <button @click="OpenEnvUpdate(d.ID, d.Name, d.NameRemarks, d.Quantity, d.Regex, d.Mode, d.Division, d.ReUpdate, d.IsPlugin, d.PluginName)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue mdui-text-color-white">
                                     修改
@@ -70,6 +60,19 @@
                                     删除
                                 </button>
                             </th>
+                            <th>{{d.Name}}</th>
+                            <th>{{d.NameRemarks}}</th>
+                            <th>{{d.Quantity}}</th>
+                            <th>{{d.Regex}}</th>
+                            <th v-if="d.Mode === 1">新建模式</th>
+                            <th v-else-if="d.Mode === 2">合并模式</th>
+                            <th v-else>更新模式</th>
+                            <th>{{d.Division}}</th>
+                            <th>{{d.ReUpdate}}</th>
+                            <th v-if="d.IsCDK === true" style="color: green">启用</th>
+                            <th v-else>未绑定</th>
+                            <th>{{d.IsPlugin}}</th>
+                            <th>{{d.PluginName}}</th>
                         </tr>
                     </tbody>
                 </table>
@@ -111,6 +114,15 @@
                     <div id="updateRe" class="mdui-textfield" style="display: none">
                         <label class="mdui-textfield-label">更新匹配正则</label>
                         <input class="mdui-textfield-input" type="text" id="envDivision" placeholder="更新模式：必填" v-model="AddEnvName.envReUpdate">
+                    </div>
+                    <div class="mdui-textfield">
+                        <label class="mdui-textfield-label">绑定CDK</label>
+                        <label class="mdui-switch">
+                            禁用&ensp;
+                            <input v-model="AddEnvName.envIsCDK" type="checkbox"/>
+                            <i class="mdui-switch-icon"></i>
+                            &ensp;启用
+                        </label>
                     </div>
                     <div class="mdui-textfield">
                         <label class="mdui-textfield-label">启用插件</label>
@@ -195,6 +207,15 @@
                         <input class="mdui-textfield-input" type="text" id="envDivision" placeholder="更新模式：必填" v-model="EnvUpdate.envReUpdate">
                     </div>
                     <div class="mdui-textfield">
+                        <label class="mdui-textfield-label">绑定CDK</label>
+                        <label class="mdui-switch">
+                            禁用&ensp;
+                            <input v-model="EnvUpdate.envIsCDK" type="checkbox"/>
+                            <i class="mdui-switch-icon"></i>
+                            &ensp;启用
+                        </label>
+                    </div>
+                    <div class="mdui-textfield">
                         <label class="mdui-textfield-label">启用插件</label>
                         <label class="mdui-switch">
                             <input v-model="EnvUpdate.envIsPlugin" @change="ChangeUpdatePluginZ()" type="checkbox"/>
@@ -262,7 +283,8 @@ export default {
                 envDivision: "",
                 envReUpdate: "",
                 envIsPlugin: false,
-                envPluginName: ""
+                envPluginName: "",
+                envIsCDK: false
             },
             EnvAll: [{
                 ID: 0,
@@ -274,7 +296,8 @@ export default {
                 Division: "",
                 ReUpdate: "",
                 IsPlugin: false,
-                PluginName: ""
+                PluginName: "",
+                IsCDK: false
             }],
             EnvDel: {
                 envID: 0
@@ -289,7 +312,8 @@ export default {
                 envDivision: "",
                 envReUpdate: "",
                 envIsPlugin: false,
-                envPluginName: ""
+                envPluginName: "",
+                envIsCDK: false
             },
             JsAll: [{
                 FileName: "",
