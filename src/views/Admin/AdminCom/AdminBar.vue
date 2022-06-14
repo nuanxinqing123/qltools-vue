@@ -21,6 +21,10 @@
                 <i class="mdui-list-item-icon mdui-icon material-icons">import_export</i>
                 <div class="mdui-list-item-content">容器管理</div>
             </a>
+            <a @click="this.OpenURL('/#/admin/cdk/')" class="mdui-list-item">
+                <i class="mdui-list-item-icon mdui-icon material-icons">credit_card</i>
+                <div class="mdui-list-item-content">CDK管理</div>
+            </a>
             <a @click="this.OpenURL('/#/admin/message/')" class="mdui-list-item">
                 <i class="mdui-list-item-icon mdui-icon material-icons">sms</i>
                 <div class="mdui-list-item-content">推送管理</div>

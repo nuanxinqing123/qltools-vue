@@ -75,6 +75,15 @@ const routes = [
     component: () => import('../views/Admin/AdminTransferView'),
   },
   {
+    path: '/admin/cdk',
+    name: 'adminCD-KEY',
+    meta: {
+      requireAuth: true,
+      title: 'CD-KEY管理'
+    },
+    component: () => import('../views/Admin/AdminAboutCDK'),
+  },
+  {
     path: '/admin/message',
     name: 'adminMessage',
     meta: {
