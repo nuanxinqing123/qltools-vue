@@ -12,8 +12,8 @@ const routes = [{
 		},
 		component: () => import('../views/IndexView.vue'),
 		beforeEnter: () => {
-			axios.get("/v2/api/set/settings").then((res) => {//将接口赋予的值给title
-					window.document.title = res.data.data[5].value
+			axios.get("/v1/api/set/setting?key=webTitle").then((res) => {//将接口赋予的值给title
+					window.document.title = res.data.webTitle?res.data.webTitle:"青龙Tools"
 			})
 		}
 	},
