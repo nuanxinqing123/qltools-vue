@@ -13,7 +13,8 @@ const routes = [{
 		component: () => import('../views/IndexView.vue'),
 		beforeEnter: () => {
 			axios.get("/v1/api/set/setting?key=webTitle").then((res) => {//将接口赋予的值给title
-					window.document.title = res.data.webTitle?res.data.webTitle:"青龙Tools"
+					console.log(res)
+					window.document.title = res.data.data.value?res.data.data.value:"青龙Tools"
 			})
 		}
 	},
@@ -152,7 +153,6 @@ const routes = [{
 ]
 
 const router = createRouter({
-	
 	history: createWebHashHistory(process.env.BASE_URL),
 	routes
 })
