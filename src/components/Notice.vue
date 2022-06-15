@@ -161,124 +161,131 @@ export default {
         POSTEnvAdd() {
         let inst = new mdui.Dialog('#SendOK');
         this.EnvAdd.envCDK = localStorage.getItem('cdk');
-        axios.post("/v1/api/env/add", this.EnvAdd).then((res) => {
-          // 请求成功
-          let token = localStorage.getItem('Bearer');
-          switch (res.data !== "") {
-            case res.data.code === 2000:
-              // 上传成功
-              document.getElementById("dialog-title").innerText = "Success"
-              document.getElementById("dialog-content").innerText = "您已提交成功"
-              inst.toggle()
+        if (this.EnvAdd.serverID === -100) {
+            document.getElementById("dialog-title").innerText = "Error"
+            document.getElementById("dialog-content").innerText = "此服务器已失去连接（禁止提交），请更换至其他服务器"
+            inst.toggle()
+        } else {
+            axios.post("/v1/api/env/add", this.EnvAdd).then((res) => {
+                // 请求成功
+                let token = localStorage.getItem('Bearer');
+                switch (res.data !== "") {
+                    case res.data.code === 2000:
+                        // 上传成功
+                        document.getElementById("dialog-title").innerText = "Success"
+                        document.getElementById("dialog-content").innerText = "您已提交成功"
+                        inst.toggle()
 
-              setTimeout(() => {
-                  location.reload()
-              }, 1500)
-              break
-            case res.data.code === 5020:
-              // 限额已满，禁止提交
-              document.getElementById("dialog-title").innerText = "Error"
-              document.getElementById("dialog-content").innerText = "限额已满，禁止提交"
-              inst.toggle()
-              break
-            case res.data.code === 5019:
-              // 上传内容不符合规定, 请检查后再提交
-              document.getElementById("dialog-title").innerText = "Error"
-              document.getElementById("dialog-content").innerText = "上传内容不符合规定, 请检查后再提交"
-              inst.toggle()
-              break
-            case res.data.code === 5015:
-              // 提交服务器或变量名不在白名单
-              if (!(token === null || token === "")) {
-                  document.getElementById("dialog-title").innerText = "【管理员可见】Error"
-                  document.getElementById("dialog-content").innerText = "提交服务器或变量名不在白名单, 请尝试在后台点击清空变量绑定按钮后重新绑定解决"
-                  inst.toggle()
-              } else {
-                  document.getElementById("dialog-title").innerText = "Error"
-                  document.getElementById("dialog-content").innerText = "提交服务器或变量名不在白名单"
-                  inst.toggle()
-              }
-              break
-            case res.data.code === 5016:
-              // 发生一点小意外，请重新提交
-              document.getElementById("dialog-title").innerText = "Error"
-              document.getElementById("dialog-content").innerText = res.data.msg
-              inst.toggle()
-              break
-            case res.data.code === 5024:
-              // 禁止提交重复数据
-              document.getElementById("dialog-title").innerText = "Error"
-              document.getElementById("dialog-content").innerText = "禁止提交重复数据"
-              inst.toggle()
-              break
-            case res.data.code === 5025:
-              // 变量已被管理员禁止提交
-              document.getElementById("dialog-title").innerText = "Error"
-              document.getElementById("dialog-content").innerText = "该变量已被管理员禁止提交"
-              inst.toggle()
-              break
-            case res.data.code === 5026:
-              // 今日提交已到达上限
-              document.getElementById("dialog-title").innerText = "Error"
-              document.getElementById("dialog-content").innerText = "今日提交已到达上限"
-              inst.toggle()
-              break
-            case res.data.code === 5028:
-              // JS执行发生错误, 系统错误
-                if (!(token === null || token === "")) {
-                    document.getElementById("dialog-title").innerText = "【管理员可见】Error"
-                    document.getElementById("dialog-content").innerText = "当前变量绑定的JS插件执行发生错误发生错误，请查看日志解决错误（日志路径：logs目录下面）"
-                    inst.toggle()
-                } else {
-                    document.getElementById("dialog-title").innerText = "Error"
-                    document.getElementById("dialog-content").innerText = res.data.msg
-                    inst.toggle()
+                        setTimeout(() => {
+                            location.reload()
+                        }, 1500)
+                        break
+                    case res.data.code === 5020:
+                        // 限额已满，禁止提交
+                        document.getElementById("dialog-title").innerText = "Error"
+                        document.getElementById("dialog-content").innerText = "限额已满，禁止提交"
+                        inst.toggle()
+                        break
+                    case res.data.code === 5019:
+                        // 上传内容不符合规定, 请检查后再提交
+                        document.getElementById("dialog-title").innerText = "Error"
+                        document.getElementById("dialog-content").innerText = "上传内容不符合规定, 请检查后再提交"
+                        inst.toggle()
+                        break
+                    case res.data.code === 5015:
+                        // 提交服务器或变量名不在白名单
+                        if (!(token === null || token === "")) {
+                            document.getElementById("dialog-title").innerText = "【管理员可见】Error"
+                            document.getElementById("dialog-content").innerText = "提交服务器或变量名不在白名单, 请尝试在后台点击清空变量绑定按钮后重新绑定解决"
+                            inst.toggle()
+                        } else {
+                            document.getElementById("dialog-title").innerText = "Error"
+                            document.getElementById("dialog-content").innerText = "提交服务器或变量名不在白名单"
+                            inst.toggle()
+                        }
+                        break
+                    case res.data.code === 5016:
+                        // 发生一点小意外，请重新提交
+                        document.getElementById("dialog-title").innerText = "Error"
+                        document.getElementById("dialog-content").innerText = res.data.msg
+                        inst.toggle()
+                        break
+                    case res.data.code === 5024:
+                        // 禁止提交重复数据
+                        document.getElementById("dialog-title").innerText = "Error"
+                        document.getElementById("dialog-content").innerText = "禁止提交重复数据"
+                        inst.toggle()
+                        break
+                    case res.data.code === 5025:
+                        // 变量已被管理员禁止提交
+                        document.getElementById("dialog-title").innerText = "Error"
+                        document.getElementById("dialog-content").innerText = "该变量已被管理员禁止提交"
+                        inst.toggle()
+                        break
+                    case res.data.code === 5026:
+                        // 今日提交已到达上限
+                        document.getElementById("dialog-title").innerText = "Error"
+                        document.getElementById("dialog-content").innerText = "今日提交已到达上限"
+                        inst.toggle()
+                        break
+                    case res.data.code === 5028:
+                        // JS执行发生错误, 系统错误
+                        if (!(token === null || token === "")) {
+                            document.getElementById("dialog-title").innerText = "【管理员可见】Error"
+                            document.getElementById("dialog-content").innerText = "当前变量绑定的JS插件执行发生错误发生错误，请查看日志解决错误（日志路径：logs目录下面）"
+                            inst.toggle()
+                        } else {
+                            document.getElementById("dialog-title").innerText = "Error"
+                            document.getElementById("dialog-content").innerText = res.data.msg
+                            inst.toggle()
+                        }
+                        break
+                    case res.data.code === 5029:
+                        // 提交数据已被管理员拒绝
+                        document.getElementById("dialog-title").innerText = "Error"
+                        document.getElementById("dialog-content").innerText = "提交数据已被管理员拒绝，原因：" + res.data.msg
+                        inst.toggle()
+                        break
+                    case res.data.code === 5003:
+                        // 服务繁忙,请稍后重试
+                        if (!(token === null || token === "")) {
+                            document.getElementById("dialog-title").innerText = "【管理员可见】Error"
+                            document.getElementById("dialog-content").innerText = "程序内部发生错误，请查看日志解决错误（日志路径：logs目录下面）"
+                            inst.toggle()
+                        } else {
+                            document.getElementById("dialog-title").innerText = "Error"
+                            document.getElementById("dialog-content").innerText = "服务繁忙,请稍后重试"
+                            inst.toggle()
+                        }
+                        break
+                    case res.data.code === 5032:
+                        // CDK校验错误
+                        document.getElementById("dialog-title").innerText = "Error"
+                        document.getElementById("dialog-content").innerText = res.data.msg
+                        inst.toggle()
+                        break
+                    case res.data.code === 5002:
+                        // 传递参数错误
+                        if (res.data.data === "") {
+                            document.getElementById("dialog-title").innerText = "Error"
+                            document.getElementById("dialog-content").innerText = "服务繁忙,请稍后重试"
+                            inst.toggle()
+                        } else {
+                            document.getElementById("dialog-title").innerText = "Error"
+                            document.getElementById("dialog-content").innerText = JSON.parse(res.data.msg)
+                            inst.toggle()
+                        }
+                        break
                 }
-              break
-            case res.data.code === 5029:
-              // 提交数据已被管理员拒绝
-              document.getElementById("dialog-title").innerText = "Error"
-              document.getElementById("dialog-content").innerText = "提交数据已被管理员拒绝，原因：" + res.data.msg
-              inst.toggle()
-              break
-            case res.data.code === 5003:
-              // 服务繁忙,请稍后重试
-                if (!(token === null || token === "")) {
-                    document.getElementById("dialog-title").innerText = "【管理员可见】Error"
-                    document.getElementById("dialog-content").innerText = "程序内部发生错误，请查看日志解决错误（日志路径：logs目录下面）"
-                    inst.toggle()
-                } else {
-                    document.getElementById("dialog-title").innerText = "Error"
-                    document.getElementById("dialog-content").innerText = "服务繁忙,请稍后重试"
-                    inst.toggle()
-                }
-              break
-            case res.data.code === 5032:
-                // CDK校验错误
-                document.getElementById("dialog-title").innerText = "Error"
-                document.getElementById("dialog-content").innerText = res.data.msg
-                inst.toggle()
-                break
-            case res.data.code === 5002:
-              // 传递参数错误
-              if (res.data.data === "") {
-                document.getElementById("dialog-title").innerText = "Error"
-                document.getElementById("dialog-content").innerText = "服务繁忙,请稍后重试"
-                inst.toggle()
-              } else {
-                document.getElementById("dialog-title").innerText = "Error"
-                document.getElementById("dialog-content").innerText = JSON.parse(res.data.msg)
-                inst.toggle()
-              }
-              break
-          }
-        }).catch((error) => {
-          // 请求失败
-          mdui.snackbar({
-            message: error,
-            position: 'right-top',
-          });
-        })
+            }).catch((error) => {
+                // 请求失败
+                mdui.snackbar({
+                    message: error,
+                    position: 'right-top',
+                });
+            })
+        }
+
         },
         // 修改底栏高度状态
         changeStyle() {
