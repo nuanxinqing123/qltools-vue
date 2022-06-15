@@ -52,7 +52,7 @@
                     <tbody>
                         <tr v-for="d in EnvAll" :key="d">
                             <th>
-                                <button @click="OpenEnvUpdate(d.ID, d.Name, d.NameRemarks, d.Quantity, d.Regex, d.Mode, d.Division, d.ReUpdate, d.IsPlugin, d.PluginName)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue mdui-text-color-white">
+                                <button @click="OpenEnvUpdate(d.ID, d.Name, d.NameRemarks, d.Quantity, d.Regex, d.Mode, d.Division, d.ReUpdate, d.IsPlugin, d.PluginName, d.IsCDK)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue mdui-text-color-white">
                                     修改
                                 </button>
                                 &ensp;&ensp;
@@ -358,7 +358,7 @@ export default {
             inst.toggle()
         },
         // 打开修改
-        OpenEnvUpdate(id, name, NameRemarks, quantity, regex, mode, division, ReUpdate, IsPlugin, PluginName){
+        OpenEnvUpdate(id, name, NameRemarks, quantity, regex, mode, division, ReUpdate, IsPlugin, PluginName, IsCDK){
             this.EnvUpdate.envID = id
             this.EnvUpdate.envName = name
             this.EnvUpdate.envNameRemarks = NameRemarks
@@ -369,6 +369,7 @@ export default {
             this.EnvUpdate.envReUpdate = ReUpdate
             this.EnvUpdate.envIsPlugin = IsPlugin
             this.EnvUpdate.envPluginName = PluginName
+            this.EnvUpdate.envIsCDK = IsCDK
             if (this.EnvUpdate.envMode === 1){
                 // 新建模式
                 document.getElementById("u_delimiter").style.display = "none"

@@ -1,23 +1,23 @@
 <template>
     <div id="BodyCon">
-    <!--        公告-->
-    <div class="box" id="box_notice">
-        <!--        公告部分-->
-        <div>
-    <p style="padding-bottom: 10px">网站公告</p>
-    <hr>
-    <div class="notice_data" id="notice_data">
-      <!--                  开始-->
-      <strong><span
-          style="color:#E53333; text-align: center">本工具仅用于学习和调试使用，禁止用于任何违法犯罪行为</span></strong><br>
-      <!--                  结束-->
-    </div>
-    </div>
-    </div>
-    <!--        提交-->
-    <div class="box" style="margin-top: 35px;">
+        <!--        公告-->
+        <div class="box" id="box_notice">
+            <!--        公告部分-->
+            <div>
+                <p style="padding-bottom: 10px">网站公告</p>
+                <hr>
+                <div class="notice_data" id="notice_data">
+                  <!--                  开始-->
+                  <strong><span
+                      style="color:#E53333; text-align: center">本工具仅用于学习和调试使用，禁止用于任何违法犯罪行为</span></strong><br>
+                  <!--                  结束-->
+                </div>
+            </div>
+        </div>
+        <!--        提交-->
+        <div class="box" style="margin-top: 35px;">
     <div>
-    <p style="padding-bottom: 10px">变量提交</p>
+    <p style="padding-bottom: 10px">变量提交 &ensp;&ensp; {{this.CDK_INFO}}</p>
     <hr>
     <div id="envSelect">
       <!-- <v-app>
@@ -26,7 +26,8 @@
           <v-select :items="items" label="Outlined style" dense outlined></v-select>
         </v-col>
       </v-app> -->
-        <div style="width: 100%">
+<!--        服务变量组-->
+    <div style="width: 100%">
             <div style="margin-top: 8px">
                 服务器：
                 <select class="mdui-select" @change="changeEnvData($event)" id="server">
@@ -47,6 +48,7 @@
             </div>
         </div>
     </div>
+        <!--        变量提交组-->
         <div class="envInput">
             <form v-on:submit.prevent="POSTEnvAdd">
                 <div class="mdui-textfield">
@@ -66,13 +68,13 @@
     </div>
 </div>
 <!--        成功提示-->
-<div id="SendOK" class="mdui-dialog" style="display: none;">
-<div class="mdui-dialog-title" id="dialog-title">Success</div>
-<div class="mdui-dialog-content" id="dialog-content">您已提交成功</div>
-<div class="mdui-dialog-actions">
-<button class="mdui-btn mdui-ripple" mdui-dialog-close>确认</button>
-</div>
-</div>
+    <div id="SendOK" class="mdui-dialog" style="display: none;">
+        <div class="mdui-dialog-title" id="dialog-title">Success</div>
+        <div class="mdui-dialog-content" id="dialog-content">您已提交成功</div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-close>确认</button>
+        </div>
+    </div>
 </div>
 </template>
 
@@ -91,8 +93,10 @@ export default {
               serverID: 0,
               envName: "",
               envData: "",
-              envRemarks: ""
-            }
+              envRemarks: "",
+              envCDK: ""
+            },
+            CDK_INFO: ""
         }
     },
     methods: {
@@ -156,6 +160,7 @@ export default {
         // 发送上传请求
         POSTEnvAdd() {
         let inst = new mdui.Dialog('#SendOK');
+        this.EnvAdd.envCDK = localStorage.getItem('cdk');
         axios.post("/v1/api/env/add", this.EnvAdd).then((res) => {
           // 请求成功
           let token = localStorage.getItem('Bearer');
@@ -248,6 +253,12 @@ export default {
                     inst.toggle()
                 }
               break
+            case res.data.code === 5032:
+                // CDK校验错误
+                document.getElementById("dialog-title").innerText = "Error"
+                document.getElementById("dialog-content").innerText = res.data.msg
+                inst.toggle()
+                break
             case res.data.code === 5002:
               // 传递参数错误
               if (res.data.data === "") {
@@ -276,11 +287,26 @@ export default {
               'px';
             mdui.mutation();
         },
+        // 修改CDK提示
+        changeCDKInfo(){
+            // 获取CDK值
+            let cdk = localStorage.getItem('cdk');
+            if (!(cdk === null || cdk === "")) {
+                // CDK存在，获取CDK信息
+                axios.post("/v1/api/check/cdk", {"cdk": cdk}).then((res) => {
+                    switch (res.data !== "") {
+                        case res.data.code === 2000:
+                            this.CDK_INFO = res.data.data
+                    }
+                })
+            }
+        }
     },
     mounted() {
       this.GetIndexData()
       this.GetNotice()
       this.changeStyle()
+      this.changeCDKInfo()
     }
 }
 </script>
