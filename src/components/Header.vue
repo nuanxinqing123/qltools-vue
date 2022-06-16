@@ -9,13 +9,13 @@
         <a mdui-tooltip="{content: '密钥添加/更新'}" @click="OpenCDKInput()" class="mdui-btn mdui-btn-icon">
             <i class="mdui-icon material-icons">credit_card</i>
         </a>
-        <a mdui-tooltip="{content: '刷新页面'}" href="javascript:location.reload();" class="mdui-btn mdui-btn-icon">
+        <a mdui-tooltip="{content: '刷新页面'}" href="javascript:location.reload();" class="mdui-btn mdui-btn-icon mdui-ripple">
             <i class="mdui-icon material-icons">refresh</i>
         </a>
-        <a mdui-tooltip="{content: '管理面板'}" @click="this.GoAdmin()" id="Admin" class="mdui-btn mdui-btn-icon" style="display: none">
+        <a mdui-tooltip="{content: '管理面板'}" @click="this.GoAdmin()" id="Admin" class="mdui-btn mdui-btn-icon mdui-ripple" style="display: none">
             <i class="mdui-icon material-icons">account_circle</i>
         </a>
-        <a mdui-tooltip="{content: '退出登录'}" @click="this.LogOut()" id="LogOut" class="mdui-btn mdui-btn-icon" style="display: none">
+        <a mdui-tooltip="{content: '退出登录'}" @click="this.LogOut()" id="LogOut" class="mdui-btn mdui-btn-icon mdui-ripple" style="display: none">
             <i class="mdui-icon material-icons">exit_to_app</i>
         </a>
     </div>
@@ -28,7 +28,7 @@
                     <input class="mdui-textfield-input" type="text" placeholder="请输入您的CD-KEY密钥" v-model="CD_KEY">
                 </div>
                 <div class="mdui-dialog-actions">
-                    <button @click="InsertCDK()" class="mdui-btn mdui-color-green-700 mdui-text-color-white btn">
+                    <button @click="InsertCDK()" class="mdui-ripple mdui-btn mdui-color-green-700 mdui-text-color-white btn">
                         <i class="mdui-icon mdui-icon-left material-icons">check</i>{{this.CDK_Btn}}
                     </button>
                 </div>

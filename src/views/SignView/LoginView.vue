@@ -17,7 +17,7 @@
                         <input type="password" class="mdui-textfield-input" placeholder="管理员密码" v-model="LoginData.password" />
                     </div>
                     <div style="text-align: center; padding-top: 20px;">
-                        <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-blue-50" style="width: 200px;" id="LoginBtn">登&ensp;&ensp;录</button>
+                        <button class="mdui-ripple mdui-btn mdui-btn-raised mdui-ripple mdui-color-blue-50" style="width: 200px;" id="LoginBtn">登&ensp;&ensp;录</button>
                     </div>
                 </form>
             </div>

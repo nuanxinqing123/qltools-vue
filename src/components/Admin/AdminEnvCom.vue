@@ -28,7 +28,7 @@
                 <p class="text_s">绑定插件：管理员通过上传JavaScript插件绑定变量来再次确认变量数据是否符合要求，是否允许上传</p>
             </div>
             <div class="mdui-card-menu">
-                <button @click="OpenDialog()" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-grey mdui-text-color-white">
+                <button @click="OpenDialog()" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-grey mdui-text-color-white">
                     <i class="mdui-icon mdui-icon-left material-icons">loupe</i>新增
                 </button>
             </div>
@@ -138,7 +138,7 @@
                         </select>
                     </div>
                     <div class="mdui-dialog-actions">
-                        <button class="mdui-btn mdui-color-green-700 mdui-text-color-white btn">
+                        <button class="mdui-ripple mdui-btn mdui-color-green-700 mdui-text-color-white btn">
                             <i class="mdui-icon mdui-icon-left material-icons">check</i>确认新增
                         </button>
                     </div>
@@ -149,7 +149,7 @@
         <div id="envDel" class="mdui-dialog" style="display: none;">
             <div class="mdui-dialog-content">确认删除变量?</div>
             <div class="mdui-dialog-actions">
-                <button class="mdui-btn mdui-ripple" mdui-dialog-close>返回</button>
+                <button class="mdui-ripple mdui-btn mdui-ripple" mdui-dialog-close>返回</button>
                 <button @click="DelEnv()" class="mdui-btn mdui-ripple">删除</button>
             </div>
         </div>
@@ -229,7 +229,7 @@
                         </select>
                     </div>
                     <div class="mdui-dialog-actions">
-                        <button class="mdui-btn mdui-color-green-700 mdui-text-color-white btn">
+                        <button class="mdui-ripple mdui-btn mdui-color-green-700 mdui-text-color-white btn">
                             <i class="mdui-icon mdui-icon-left material-icons">check</i>确认修改
                         </button>
                     </div>

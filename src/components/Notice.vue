@@ -60,7 +60,7 @@
                     v-model="EnvAdd.envRemarks" />
                 </div>
                 <div style="text-align: center; padding-top: 20px;">
-                  <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-blue-50"
+                  <button class="mdui-ripple mdui-btn mdui-btn-raised mdui-ripple mdui-color-blue-50"
                     style="width: 200px;" id="LoginBtn">提&ensp;&ensp;交</button>
                 </div>
             </form>
@@ -72,7 +72,7 @@
         <div class="mdui-dialog-title" id="dialog-title">Success</div>
         <div class="mdui-dialog-content" id="dialog-content">您已提交成功</div>
         <div class="mdui-dialog-actions">
-            <button class="mdui-btn mdui-ripple" mdui-dialog-close>确认</button>
+            <button class="mdui-ripple mdui-btn mdui-ripple" mdui-dialog-close>确认</button>
         </div>
     </div>
 </div>

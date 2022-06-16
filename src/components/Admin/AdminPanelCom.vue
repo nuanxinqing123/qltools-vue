@@ -18,13 +18,13 @@
                 <div class="mdui-card-primary-subtitle">Set Panel</div>
             </div>
             <div class="mdui-card-menu">
-                <button @click="OpenPanelAdd()" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-grey mdui-text-color-white">
+                <button @click="OpenPanelAdd()" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-grey mdui-text-color-white">
                     <i class="mdui-icon mdui-icon-left material-icons">loupe</i>新增
                 </button>
-                <button @click="OpenPutPanelEnv()" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-grey mdui-text-color-white">
+                <button @click="OpenPutPanelEnv()" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-grey mdui-text-color-white">
                     <i class="mdui-icon mdui-icon-left material-icons">delete</i>清空变量绑定
                 </button>
-                <button @click="UpdateAllPanelToken()" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-grey mdui-text-color-white">
+                <button @click="UpdateAllPanelToken()" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-grey mdui-text-color-white">
                     <i class="mdui-icon mdui-icon-left material-icons">settings_backup_restore</i>更新Token
                 </button>
             </div>
@@ -106,7 +106,7 @@
                         <input class="mdui-textfield-input" type="text" id="panelSecret" placeholder="必填" v-model="AddPanelData.secret">
                     </div>
                     <div class="mdui-dialog-actions">
-                        <button class="mdui-btn mdui-color-green-700 mdui-text-color-white btn">
+                        <button class="mdui-ripple mdui-btn mdui-color-green-700 mdui-text-color-white btn">
                             <i class="mdui-icon mdui-icon-left material-icons">check</i>确认新增
                         </button>
                     </div>
@@ -117,8 +117,8 @@
         <div id="panelDel" class="mdui-dialog" style="display: none;">
             <div class="mdui-dialog-content">确认删除面板?</div>
             <div class="mdui-dialog-actions">
-                <button class="mdui-btn mdui-ripple" mdui-dialog-close>返回</button>
-                <button @click="DelPanel()" class="mdui-btn mdui-ripple">删除</button>
+                <button class="mdui-ripple mdui-btn mdui-ripple" mdui-dialog-close>返回</button>
+                <button @click="DelPanel()" class="mdui-ripple mdui-btn mdui-ripple">删除</button>
             </div>
         </div>
         <!--        面板修改-->
@@ -161,7 +161,7 @@
                         <input class="mdui-textfield-input" type="text" placeholder="必填" v-model="UpdatePanelData.secret">
                     </div>
                     <div class="mdui-dialog-actions">
-                        <button class="mdui-btn mdui-color-green-700 mdui-text-color-white btn">
+                        <button class="mdui-ripple mdui-btn mdui-color-green-700 mdui-text-color-white btn">
                             <i class="mdui-icon mdui-icon-left material-icons">check</i>确认修改
                         </button>
                     </div>
@@ -182,7 +182,7 @@
                         </label>&ensp;&ensp;
                     </span>
                     <div class="mdui-dialog-actions">
-                        <button class="mdui-btn mdui-color-green-700 mdui-text-color-white btn">
+                        <button class="mdui-ripple mdui-btn mdui-color-green-700 mdui-text-color-white btn">
                             <i class="mdui-icon mdui-icon-left material-icons">check</i>确认绑定
                         </button>
                     </div>
@@ -194,7 +194,7 @@
             <div class="mdui-dialog-title">确认清空绑定?</div>
             <div class="mdui-dialog-content">此功能会清除所有面板的绑定变量(正式版1.4以及之前的版本用户请执行此操作)</div>
             <div class="mdui-dialog-actions">
-                <button class="mdui-btn mdui-ripple" mdui-dialog-close>返回</button>
+                <button class="mdui-ripple mdui-btn mdui-ripple" mdui-dialog-close>返回</button>
                 <button @click="DelPanelBingEnv()" class="mdui-btn mdui-ripple">执行</button>
             </div>
         </div>

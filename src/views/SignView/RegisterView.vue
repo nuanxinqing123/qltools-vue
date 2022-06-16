@@ -25,7 +25,7 @@
                         <input type="password" class="mdui-textfield-input" placeholder="再次确认密码" v-model="RegisterData.re_password" />
                     </div>
                     <div style="text-align: center; padding-top: 20px;">
-                        <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-blue-50" style="width: 200px;" id="LoginBtn">注&ensp;&ensp;册</button>
+                        <button class="mdui-ripple mdui-btn mdui-btn-raised mdui-ripple mdui-color-blue-50" style="width: 200px;" id="LoginBtn">注&ensp;&ensp;册</button>
                     </div>
                 </form>
             </div>

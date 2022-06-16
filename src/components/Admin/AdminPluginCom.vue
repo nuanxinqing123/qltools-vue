@@ -20,7 +20,7 @@
                 <div class="mdui-card-primary-subtitle">Plugin List</div>
             </div>
             <div class="mdui-card-menu">
-                <button mdui-dialog="{target: '#pluginUpload'}" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-grey mdui-text-color-white">
+                <button mdui-dialog="{target: '#pluginUpload'}" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-grey mdui-text-color-white">
                     <i class="mdui-icon mdui-icon-left material-icons">file_upload</i>上传插件
                 </button>
             </div>
@@ -133,8 +133,8 @@ function main(env) {
         <div id="pluginDel" class="mdui-dialog">
             <div class="mdui-dialog-content">确认删除插件?</div>
             <div class="mdui-dialog-actions">
-                <button class="mdui-btn mdui-ripple" mdui-dialog-close>返回</button>
-                <button @click="DelPlugin()" class="mdui-btn mdui-ripple">删除</button>
+                <button class="mdui-ripple mdui-btn mdui-ripple" mdui-dialog-close>返回</button>
+                <button @click="DelPlugin()" class="mdui-ripple mdui-btn mdui-ripple">删除</button>
             </div>
         </div>
         <!--        上传插件-->
@@ -143,7 +143,7 @@ function main(env) {
             <div class="mdui-dialog-content mdui-typo" style="height: 407px;">
                 <input type= "file" @change="UpdateFile" id="pluginFile" accept="application/javascript"/>
                 <div class="mdui-dialog-actions">
-                    <button @click="SendFile" class="mdui-btn mdui-color-green-700 mdui-text-color-white btn" mdui-dialog-close>
+                    <button @click="SendFile" class="mdui-ripple mdui-btn mdui-color-green-700 mdui-text-color-white btn" mdui-dialog-close>
                         执行操作
                     </button>
                 </div>

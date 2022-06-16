@@ -17,28 +17,28 @@
             </div>
             <div class="mdui-card-content mdui-typo">
                 操作：
-                <button @click="OpenCDKAdd()" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-indigo-a400 mdui-text-color-white">
+                <button @click="OpenCDKAdd()" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-indigo-a400 mdui-text-color-white">
                     批量新增
                 </button>&ensp;&ensp;
-                <button @click="OpenSCDK()" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-indigo-a400 mdui-text-color-white">
+                <button @click="OpenSCDK()" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-indigo-a400 mdui-text-color-white">
                     全部启用
                 </button>&ensp;&ensp;
-                <button @click="OpenECDK()" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-indigo-a400 mdui-text-color-white">
+                <button @click="OpenECDK()" class="mdui-ripple mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-indigo-a400 mdui-text-color-white">
                     全部禁用
                 </button>
             </div>
             <div class="mdui-card-content mdui-typo">
                 筛选：
-                <button @click="GetCDKData('all')" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-indigo-a400 mdui-text-color-white">
+                <button @click="GetCDKData('all')" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-indigo-a400 mdui-text-color-white">
                     全部
                 </button>&ensp;&ensp;
-                <button @click="GetCDKData('true')" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-indigo-a400 mdui-text-color-white">
+                <button @click="GetCDKData('true')" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-indigo-a400 mdui-text-color-white">
                     启用
                 </button>&ensp;&ensp;
-                <button @click="GetCDKData('false')" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-indigo-a400 mdui-text-color-white">
+                <button @click="GetCDKData('false')" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-indigo-a400 mdui-text-color-white">
                     禁用
                 </button>&ensp;&ensp;
-                <button @click="OpenSearchCDK()" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-indigo-a400 mdui-text-color-white">
+                <button @click="OpenSearchCDK()" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-indigo-a400 mdui-text-color-white">
                     搜索
                 </button>
             </div>
@@ -59,11 +59,11 @@
                             <th v-if="d['State'] === true" style="color: green">启用</th>
                             <th v-else style="color: red">禁用</th>
                             <th>
-                                <button @click='OpenUpCDK(d["ID"], d["CdKey"], d["AvailableTimes"], d["State"])' class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue mdui-text-color-white">
+                                <button @click='OpenUpCDK(d["ID"], d["CdKey"], d["AvailableTimes"], d["State"])' class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue mdui-text-color-white">
                                     修改
                                 </button>
                                 &ensp;&ensp;
-                                <button @click="OpenDelCDK(d['ID'])" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-red mdui-text-color-white">
+                                <button @click="OpenDelCDK(d['ID'])" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-red mdui-text-color-white">
                                     删除
                                 </button>
                             </th>
@@ -74,16 +74,16 @@
             <div class="mdui-card-content mdui-typo">
                 <div>
                     一共{{this.CD_KEY_Page}}页，当前第{{this.Now_Page}}页 &ensp;&emsp;
-                    <button @click="GetDivisionCDKData(Now_Page - 1)" id="previousPage" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-400 mdui-text-color-white">
+                    <button @click="GetDivisionCDKData(Now_Page - 1)" id="previousPage" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-400 mdui-text-color-white">
                         上一页
                     </button>&ensp;&ensp;
-                    <button @click="GetDivisionCDKData(Now_Page + 1)" id="nextPage" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-400 mdui-text-color-white">
+                    <button @click="GetDivisionCDKData(Now_Page + 1)" id="nextPage" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-400 mdui-text-color-white">
                         下一页
                     </button>&ensp;&ensp;&ensp;&ensp;|&ensp;&ensp;&ensp;&ensp;
                     前往第
-                    <input style="width: 50px; display: inline; text-align: center" class="mdui-textfield-input" type="number" v-model="this.Go_Page">
+                    <input style="width: 50px; display: inline; text-align: center" class="mdui-ripple mdui-textfield-input" type="number" v-model="this.Go_Page">
                     页&ensp;&ensp;
-                    <button @click="GetDivisionCDKData(this.Go_Page)" id="goPage" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-deep-purple-400 mdui-text-color-white">
+                    <button @click="GetDivisionCDKData(this.Go_Page)" id="goPage" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-deep-purple-400 mdui-text-color-white">
                         跳转
                     </button>
                 </div>
@@ -99,7 +99,7 @@
                         <input class="mdui-textfield-input" type="text" placeholder="必填" v-model="SearchData">
                     </div>
                     <div class="mdui-dialog-actions">
-                        <button class="mdui-btn mdui-color-green-700 mdui-text-color-white btn">
+                        <button class="mdui-ripple mdui-btn mdui-color-green-700 mdui-text-color-white btn">
                             <i class="mdui-icon mdui-icon-left material-icons">check</i>确认搜索
                         </button>
                     </div>
@@ -120,7 +120,7 @@
                         <input class="mdui-textfield-input" type="number" v-model="cdkAdd.cdKeyAvailableTimes">
                     </div>
                     <div class="mdui-dialog-actions">
-                        <button class="mdui-btn mdui-color-green-700 mdui-text-color-white btn">
+                        <button class="mdui-ripple mdui-btn mdui-color-green-700 mdui-text-color-white btn">
                             <i class="mdui-icon mdui-icon-left material-icons">check</i>确认新增
                         </button>
                     </div>
@@ -131,24 +131,24 @@
         <div id="sCDK" class="mdui-dialog" style="display: none;">
             <div class="mdui-dialog-content">确认<span style="color: green">启用</span>全部CD-KEY?</div>
             <div class="mdui-dialog-actions">
-                <button class="mdui-btn mdui-ripple" mdui-dialog-close>返回</button>
-                <button @click="UpdateCDKState(1)" class="mdui-btn mdui-ripple">确认</button>
+                <button class="mdui-ripple mdui-btn mdui-ripple" mdui-dialog-close>返回</button>
+                <button @click="UpdateCDKState(1)" class="mdui-ripple mdui-btn mdui-ripple">确认</button>
             </div>
         </div>
 <!--        CD-KEY全部禁用-->
         <div id="eCDK" class="mdui-dialog" style="display: none;">
             <div class="mdui-dialog-content">确认<span style="color: red">禁用</span>全部CD-KEY?</div>
             <div class="mdui-dialog-actions">
-                <button class="mdui-btn mdui-ripple" mdui-dialog-close>返回</button>
-                <button @click="UpdateCDKState(2)" class="mdui-btn mdui-ripple">确认</button>
+                <button class="mdui-ripple mdui-btn mdui-ripple" mdui-dialog-close>返回</button>
+                <button @click="UpdateCDKState(2)" class="mdui-ripple mdui-btn mdui-ripple">确认</button>
             </div>
         </div>
 <!--        CD-KEY删除-->
         <div id="delCDK" class="mdui-dialog" style="display: none;">
             <div class="mdui-dialog-content">确认<span style="color: red">删除</span>此CD-KEY?</div>
             <div class="mdui-dialog-actions">
-                <button class="mdui-btn mdui-ripple" mdui-dialog-close>返回</button>
-                <button @click="SendDelCDK()" class="mdui-btn mdui-ripple">确认</button>
+                <button class="mdui-ripple mdui-btn mdui-ripple" mdui-dialog-close>返回</button>
+                <button @click="SendDelCDK()" class="mdui-ripple mdui-btn mdui-ripple">确认</button>
             </div>
         </div>
 <!--        CD-KEY修改-->
@@ -174,7 +174,7 @@
                         </label>
                     </div>
                     <div class="mdui-dialog-actions">
-                        <button class="mdui-btn mdui-color-green-700 mdui-text-color-white btn">
+                        <button class="mdui-ripple mdui-btn mdui-color-green-700 mdui-text-color-white btn">
                             <i class="mdui-icon mdui-icon-left material-icons">check</i>确认修改
                         </button>
                     </div>

@@ -46,7 +46,7 @@
                 </span>
             </div>
             <div class="mdui-float-right" style="margin-right: 15px; margin-top: 15px; margin-bottom: 15px">
-                <button @click="SendData" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
+                <button @click="SendData" class="mdui-ripple mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
                     执行任务
                 </button>
             </div>
@@ -74,12 +74,12 @@
             </div>
             <div class="mdui-divider"></div>
             <div class="mdui-float-right" style="margin-right: 15px; margin-top: 15px; margin-bottom: 15px">
-                <button mdui-dialog="{target: '#Restore'}" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
+                <button mdui-dialog="{target: '#Restore'}" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
                     恢复
                 </button>
             </div>
             <div class="mdui-float-right" style="margin-right: 15px; margin-top: 15px; margin-bottom: 15px">
-                <button @click="SendBackup" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
+                <button @click="SendBackup" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
                     备份
                 </button>
             </div>
@@ -118,7 +118,7 @@
             <div class="mdui-dialog-content mdui-typo" style="height: 407px;">
                 <input type= "file" @change="UpdateFile" id="backupFile" accept="application/json"/>
                 <div class="mdui-dialog-actions">
-                    <button @click="SendRestore" class="mdui-btn mdui-color-green-700 mdui-text-color-white btn" mdui-dialog-close>
+                    <button @click="SendRestore" class="mdui-ripple mdui-btn mdui-color-green-700 mdui-text-color-white btn" mdui-dialog-close>
                         执行操作
                     </button>
                 </div>
@@ -129,7 +129,7 @@
             <div class="mdui-dialog-title">任务提示</div>
             <div class="mdui-dialog-content">操作已进入任务队列, 请稍后前往青龙面板查看结果</div>
             <div class="mdui-dialog-actions">
-                <button class="mdui-btn mdui-ripple" mdui-dialog-close>确认</button>
+                <button class="mdui-btn mdui-ripple mdui-ripple" mdui-dialog-close>确认</button>
             </div>
         </div>
     </div>

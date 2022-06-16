@@ -7,7 +7,7 @@
                 <div class="mdui-card-primary-subtitle">Admin Center</div>
             </div>
             <div class="mdui-card-menu">
-                <button @click="OpenDialog()" mdui-tooltip="{content:'修改密码'}" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-grey mdui-text-color-white">
+                <button @click="OpenDialog()" mdui-tooltip="{content:'修改密码'}" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue-grey mdui-text-color-white">
                     <i class="mdui-icon mdui-icon-left material-icons">settings</i>账号设置
                 </button>
             </div>
@@ -17,7 +17,7 @@
                 <p class="text_s">在线更新（仅支持Linux）: 为了适配Docker，仅提供三种版本的在线更新。如何选择？ x86 架构选amd64，arm 架构选 arm64，其他设备选arm-7</p>
             </div>
             <div class="mdui-float-right" style="margin-right: 15px; margin-top: 15px; margin-bottom: 15px">
-                <button @click="GetUpdate" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
+                <button @click="GetUpdate" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
                     <i class="mdui-icon mdui-icon-left material-icons">update</i>检查版本
                 </button>
             </div>
@@ -92,11 +92,11 @@
                             <option>arm64</option>
                             <option>arm-7</option>
                         </select>&ensp;
-                        <button @click="SendUpdateSW" class="mdui-btn mdui-color-indigo mdui-text-color-white btn">
+                        <button @click="SendUpdateSW" class="mdui-ripple mdui-btn mdui-color-indigo mdui-text-color-white btn">
                             在线更新
                         </button>&ensp;
                         <a href="https://github.com/nuanxinqing123/QLTools/releases">
-                            <button class="mdui-btn mdui-color-green-700 mdui-text-color-white btn">
+                            <button class="mdui-ripple mdui-btn mdui-color-green-700 mdui-text-color-white btn">
                                 前往仓库
                             </button>
                         </a>

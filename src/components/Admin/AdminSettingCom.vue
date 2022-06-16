@@ -86,7 +86,7 @@
                 </div>
                 <!--                提交按钮-->
                 <div class="mdui-float-right" style="margin-right: 15px; margin-top: 15px; margin-bottom: 15px">
-                    <button @click="SendSettings" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
+                    <button @click="SendSettings" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
                         提交设置
                     </button>
                 </div>
