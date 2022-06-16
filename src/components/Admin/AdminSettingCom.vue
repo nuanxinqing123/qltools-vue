@@ -181,22 +181,22 @@ export default {
                 // 请求成功
                 switch (res.data !== "") {
                     case res.data.code === 2000:
-                        if (res.data.data[0] !== undefined){
+                        if (res.data.data[0] !== null){
                             this.valueHtml = res.data.data[0].value
                         }
-                        if (res.data.data[1] !== undefined){
+                        if (res.data.data[1] !== null){
                             this.blacklist = res.data.data[1].value
                         }
-                        if (res.data.data[2] !== undefined){
+                        if (res.data.data[2] !== null){
                             this.backgroundImage = res.data.data[2].value
                         }
-                        if (res.data.data[3] !== undefined){
+                        if (res.data.data[3] !== null){
                             this.ipCount = parseInt(res.data.data[3].value)
                         }
-                        if (res.data.data[4] !== undefined){
+                        if (res.data.data[4] !== null){
                             this.ghProxy = res.data.data[4].value
                         }
-                        if (res.data.data[4] !== undefined){
+                        if (res.data.data[5] !== null){
                             this.webTitle = res.data.data[5].value
                         }
                 }
