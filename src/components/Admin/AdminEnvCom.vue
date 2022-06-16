@@ -9,7 +9,7 @@
                 <p class="text_s">变量管理并非管理容器内的变量，而是管理前端上传的允许变量名。可以搭配正则表达式过滤恶意提交，正则表达式为空则代表允许所有内容</p>
             </div>
             <div class="mdui-float-right" style="margin-right: 15px; margin-top: 15px; margin-bottom: 15px">
-                <button @click="OpenReList" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
+                <button @click="OpenReList" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-green-700 mdui-text-color-white">
                     <i class="mdui-icon mdui-icon-left material-icons">gesture</i>投稿正则表
                 </button>
             </div>
@@ -52,11 +52,11 @@
                     <tbody>
                         <tr v-for="d in EnvAll" :key="d">
                             <th>
-                                <button @click="OpenEnvUpdate(d.ID, d.Name, d.NameRemarks, d.Quantity, d.Regex, d.Mode, d.Division, d.ReUpdate, d.IsPlugin, d.PluginName, d.IsCDK)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue mdui-text-color-white">
+                                <button @click="OpenEnvUpdate(d.ID, d.Name, d.NameRemarks, d.Quantity, d.Regex, d.Mode, d.Division, d.ReUpdate, d.IsPlugin, d.PluginName, d.IsCDK)" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-blue mdui-text-color-white">
                                     修改
                                 </button>
                                 &ensp;&ensp;
-                                <button @click="OpenEnvDel(d.ID)" class="mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-red mdui-text-color-white">
+                                <button @click="OpenEnvDel(d.ID)" class="mdui-ripple mdui-btn mdui-btn-dense mdui-btn-raised btn mdui-p-x-1 mdui-color-red mdui-text-color-white">
                                     删除
                                 </button>
                             </th>

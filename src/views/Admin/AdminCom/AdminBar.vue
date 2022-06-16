@@ -9,7 +9,7 @@
                 <i class="mdui-list-item-icon mdui-icon material-icons">playlist_play</i>
                 <div class="mdui-list-item-content">变量管理</div>
             </a>
-            <a @click="this.OpenURL('/#/admin/panel/')" class="mdui-list-item mdui-ripple">
+            <a @click="this.OpenURL('/#/admin/panel/') " class="mdui-list-item mdui-ripple">
                 <i class="mdui-list-item-icon mdui-icon material-icons">apps</i>
                 <div class="mdui-list-item-content">面板管理</div>
             </a>
@@ -58,6 +58,7 @@ export default {
             mdui.mutation();
         },
         OpenURL(url){
+			this.overlay = false
             window.open(url, "_self")
             // location.reload()
         }

@@ -102,7 +102,7 @@
                         </a>
                     </span>
 
-                    <button class="mdui-btn mdui-color-blue-700 mdui-text-color-white btn" mdui-dialog-close>
+                    <button class="mdui-ripple mdui-btn mdui-color-blue-700 mdui-text-color-white btn" mdui-dialog-close>
                         关闭通知
                     </button>
                 </div>
