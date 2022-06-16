@@ -272,7 +272,7 @@ export default {
                             inst.toggle()
                         } else {
                             document.getElementById("dialog-title").innerText = "Error"
-                            document.getElementById("dialog-content").innerText = JSON.parse(res.data.msg)
+                            document.getElementById("dialog-content").innerText = "提交内容不完整，请检查后提交"
                             inst.toggle()
                         }
                         break
