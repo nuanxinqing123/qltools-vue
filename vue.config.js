@@ -1,4 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
+const WebpackObfuscator = require('webpack-obfuscator')
 module.exports = defineConfig({
   transpileDependencies: true
 })
@@ -18,4 +19,14 @@ module.exports = {
   publicPath: process.env.NODE_ENV === 'production'
       ? '/static'
       : '/',
+  configureWebpack: {
+    plugins: [
+      // 低混淆
+      new WebpackObfuscator({
+        // 压缩代码
+        compact: true,
+        rotateStringArray: true
+      }, [])
+    ]
+  }
 }

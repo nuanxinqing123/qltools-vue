@@ -10,6 +10,7 @@
                 <p class="text_s">插件是通过JavaScript的形式向变量模块附加鉴定的一个用户自主化控制的扩展部分</p>
                 <p class="text_s">插件管理允许管理员自行上传&删除插件</p>
                 <p class="text_s">官方插件集合库：<a href="https://plugin.6b7.org/">https://plugin.6b7.org/</a></p>
+                <p class="text_s">插件开发文档：<a href="https://github.com/nuanxinqing123/QLTools/blob/master/Plugin.md">https://github.com/nuanxinqing123/QLTools/blob/master/Plugin.md</a></p>
                 <p class="text_s">官方插件集合库收集插件并非完全，管理员可自行寻找其他第三方集合库</p>
             </div>
         </div>
@@ -57,31 +58,6 @@
                 <highlightjs language='javascript' code='// [name:Cookie检测（demo 插件开发演示）]
 
 // 第一行为插件名称， 在后台显示的使用会用到
-
-// 封装Request方法 & 参数
-// request({
-//     // 请求方式（默认get）
-//     "method": "get",
-//     // 请求地址
-//     "url": "https://me-api.jd.com/user_new/info/GetJDUserInfoUnion",
-//     // 数据类型（返回数据如果是JSON那么就需要指定为json，否则默认为location）
-//     "dataType": "",
-//     // 请求头
-//     "headers": {
-//         "Cookie": env,
-//         "User-Agent": "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
-//         "Referer": "https://h5.m.jd.com/"
-//     },
-//     // 请求体(body为json请求体， 二选一即可)
-//     "body": {},
-//     "formdata": {},
-//     // 自定义超时(单位：纳秒)(5 * 1000 = 5秒)
-//     "timeout": 5 * 1000
-// })
-
-// ReFind方法 & 参数
-// ReFind(正则表达式, 待匹配数据) 返回：匹配结果列表（数组）
-// ReFind("pt_pin=.*?;", "pt_pin=xxx")
 
 // 返回数据格式
 // return {

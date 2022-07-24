@@ -20,21 +20,21 @@
         </a>
     </div>
 <!--    CDK模块-->
-    <div id="cdkAdd" class="mdui-dialog" style="top: 210px; display: none;">
-        <div class="mdui-dialog-content mdui-typo" style="height: 407px;">
-            <form v-on:submit.prevent="">
-                <div class="mdui-textfield">
-                    <label class="mdui-textfield-label">CD-KEY密钥</label>
-                    <input class="mdui-textfield-input" type="text" placeholder="请输入您的CD-KEY密钥" v-model="CD_KEY">
-                </div>
-                <div class="mdui-dialog-actions">
-                    <button @click="InsertCDK()" class="mdui-ripple mdui-btn mdui-color-green-700 mdui-text-color-white btn">
-                        <i class="mdui-icon mdui-icon-left material-icons">check</i>{{this.CDK_Btn}}
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
+<!--    <div id="cdkAdd" class="mdui-dialog" style="top: 210px; display: none;">-->
+<!--        <div class="mdui-dialog-content mdui-typo" style="height: 407px;">-->
+<!--            <form v-on:submit.prevent="">-->
+<!--                <div class="mdui-textfield">-->
+<!--                    <label class="mdui-textfield-label">CD-KEY密钥</label>-->
+<!--                    <input class="mdui-textfield-input" type="text" placeholder="请输入您的CD-KEY密钥" v-model="CD_KEY">-->
+<!--                </div>-->
+<!--                <div class="mdui-dialog-actions">-->
+<!--                    <button @click="InsertCDK()" class="mdui-ripple mdui-btn mdui-color-green-700 mdui-text-color-white btn">-->
+<!--                        <i class="mdui-icon mdui-icon-left material-icons">check</i>{{this.CDK_Btn}}-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
 </template>
 
 <script>
@@ -104,12 +104,12 @@ export default {
                 // CDK存在，修改状态为更新
                 this.CDK_Btn = "更新密钥"
             }
-        },
-        // 添加CDK
-        InsertCDK(){
-            localStorage.setItem("cdk", this.CD_KEY)
-            window.open("/", "_self")
         }
+        // 添加CDK
+        // InsertCDK(){
+        //     localStorage.setItem("cdk", this.CD_KEY)
+        //     window.open("/", "_self")
+        // }
     },
     mounted() {
         // 判断登录状态

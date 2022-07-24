@@ -75,6 +75,23 @@
             <button class="mdui-ripple mdui-btn mdui-ripple" mdui-dialog-close>确认</button>
         </div>
     </div>
+    <!--    CDK模块-->
+    <div id="cdkAdd" class="mdui-dialog" style="top: 210px; display: none;">
+        <div class="mdui-dialog-title" id="cdk-title"></div>
+        <div class="mdui-dialog-content mdui-typo" style="height: 407px;">
+            <form v-on:submit.prevent="">
+                <div class="mdui-textfield">
+                    <label class="mdui-textfield-label">CD-KEY密钥</label>
+                    <input class="mdui-textfield-input" type="text" placeholder="请输入您的CD-KEY密钥" v-model="CD_KEY">
+                </div>
+                <div class="mdui-dialog-actions">
+                    <button @click="InsertCDK()" class="mdui-ripple mdui-btn mdui-color-green-700 mdui-text-color-white btn">
+                        <i class="mdui-icon mdui-icon-left material-icons">check</i>{{this.CDK_Btn}}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 </template>
 
@@ -96,7 +113,9 @@ export default {
               envRemarks: "",
               envCDK: ""
             },
-            CDK_INFO: ""
+            CDK_INFO: "",
+            CDK_Btn: "确认密钥",
+            CD_KEY: ""
         }
     },
     methods: {
@@ -160,6 +179,7 @@ export default {
         // 发送上传请求
         POSTEnvAdd() {
         let inst = new mdui.Dialog('#SendOK');
+        let inst2 = new mdui.Dialog('#cdkAdd');
         this.EnvAdd.envCDK = localStorage.getItem('cdk');
         if (this.EnvAdd.serverID === -100) {
             document.getElementById("dialog-title").innerText = "Error"
@@ -260,9 +280,11 @@ export default {
                         break
                     case res.data.code === 5032:
                         // CDK校验错误
-                        document.getElementById("dialog-title").innerText = "Error"
-                        document.getElementById("dialog-content").innerText = res.data.msg
-                        inst.toggle()
+                        // document.getElementById("dialog-title").innerText = "Error"
+                        // document.getElementById("dialog-content").innerText = res.data.msg
+                        // inst.toggle()
+                        document.getElementById("cdk-title").innerText = "Error：" + res.data.msg
+                        inst2.toggle()
                         break
                     case res.data.code === 5002:
                         // 传递参数错误
@@ -307,6 +329,21 @@ export default {
                     }
                 })
             }
+        },
+        // 修改按钮状态
+        ChangeBtn(){
+            // 获取CDK值
+            let cdk = localStorage.getItem('cdk');
+            this.CD_KEY = cdk
+            if (!(cdk === null || cdk === "")) {
+                // CDK存在，修改状态为更新
+                this.CDK_Btn = "更新密钥"
+            }
+        },
+        // 添加CDK
+        InsertCDK(){
+            localStorage.setItem("cdk", this.CD_KEY)
+            window.open("/", "_self")
         }
     },
     mounted() {
@@ -314,6 +351,7 @@ export default {
       this.GetNotice()
       this.changeStyle()
       this.changeCDKInfo()
+      this.ChangeBtn()
     }
 }
 </script>

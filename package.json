@@ -24,7 +24,8 @@
     "vue-froala-wysiwyg": "^2.9.0",
     "vue-router": "^4.0.3",
     "vue-wechat-title": "^2.0.7",
-    "vuex": "^4.0.0"
+    "vuex": "^4.0.0",
+    "webpack-obfuscator": "^3.5.1"
   },
   "devDependencies": {
     "@arco-design/web-vue": "^2.26.0",
